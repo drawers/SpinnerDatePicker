@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">SpinnerDatePicker</string>
+    <string name="date_time_set">Set</string>
+</resources>

@@ -1,0 +1,12 @@
+<NumberPicker
+    android:id="@+id/number_picker"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="80dip"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="1dip"
+    android:layout_marginRight="1dip"
+    android:layout_marginStart="1dip"
+    android:layout_marginEnd="1dip"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    />

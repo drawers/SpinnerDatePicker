@@ -10,5 +10,4 @@
 /build
 /captures
 .externalNativeBuild
-/gradle
 gradle.properties

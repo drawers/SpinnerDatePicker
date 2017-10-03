@@ -1,28 +1,8 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
 
-//ext {
-//    bintrayRepo = 'maven'
-//    bintrayName = 'drawers-repo'
-//
-//    publishedGroupId = 'com.tsongkha.spinnerdatepicker'
-//    libraryName = 'spinner-datepicker'
-//    artifact = 'spinner-datepicker'
-//
-//    libraryDescription = 'A DatePicker for Android using spinners'
-//
-//    siteUrl = 'https://github.com/drawers/SpinnerDatePicker'
-//    gitUrl = 'https://github.com/drawers/FBLikeAndroid.git'
-//
-//    libraryVersion = '0.0.1'
-//
-//    developerId = 'drawers'
-//    developerName = 'David Rawson'
-//    developerEmail = 'draw009@aucklanduni.ac.nz'
-//
-//    licenseName = 'The Apache Software License, Version 2.0'
-//    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-//    allLicenses = ["Apache-2.0"]
-//}
+group='com.github.drawers'
+version = '0.0.3'
 
 android {
     compileSdkVersion 26
@@ -31,17 +11,31 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "0.0.3"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+repositories {
+    maven {
+        url 'http://oss.jfrog.org/artifactory/oss-snapshot-local'
     }
 }
 
@@ -52,4 +46,34 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:26.+'
     testCompile 'junit:junit:4.12'
+}
+
+android.libraryVariants.all { variant ->
+    def name = variant.buildType.name
+    def task = project.tasks.create "jar${name.capitalize()}", Jar
+    task.dependsOn variant.javaCompile
+    task.from variant.javaCompile.destinationDir
+    artifacts.add('archives', task);
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    options.charSet = 'UTF-8'
+    failOnError  false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
 }

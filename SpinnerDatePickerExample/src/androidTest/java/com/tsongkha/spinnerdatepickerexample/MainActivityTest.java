@@ -122,7 +122,7 @@ public class MainActivityTest {
                 .perform(NumberPickers.setNumber(10));
         onView(withId(com.tsongkha.spinnerdatepicker.R.id.year))
                 .perform(NumberPickers.setNumber(1960));
-        onView(withText(com.tsongkha.spinnerdatepicker.R.string.date_time_set)).perform(click());
+        onView(withText(android.R.string.ok)).perform(click());
 
         //assert
         onView(withId(R.id.date_textview)).check(matches(withText("15 10 1960")));

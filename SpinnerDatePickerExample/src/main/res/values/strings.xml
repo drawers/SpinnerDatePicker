@@ -1,6 +1,4 @@
 <resources>
     <string name="app_name">SlideDatePicker</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="date_time_set">Set</string>
-    <string name="date_year_toggle">Include year</string>
 </resources>

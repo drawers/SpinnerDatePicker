@@ -1,1 +1,2 @@
 include ':SpinnerDatePickerExample', ':SpinnerDatePickerLib'
+rootProject.name = 'SpinnerDatePicker'

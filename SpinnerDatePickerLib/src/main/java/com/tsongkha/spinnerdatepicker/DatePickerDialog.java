@@ -88,11 +88,11 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         mInitialMonth = monthOfYear;
         mInitialDay = dayOfMonth;
 
-        mTitleDateFormat = DateFormat.getDateInstance(DateFormat.FULL);
+        mTitleDateFormat = DateFormat.getDateInstance(DateFormat.LONG);
         mTitleNoYearDateFormat = DateUtils.getLocalizedDateFormatWithoutYear(getContext());
         updateTitle(mInitialYear, mInitialMonth, mInitialDay);
 
-        setButton(BUTTON_POSITIVE, context.getText(R.string.date_time_set),
+        setButton(BUTTON_POSITIVE, context.getText(android.R.string.ok),
                 this);
         setButton(BUTTON_NEGATIVE, context.getText(android.R.string.cancel),
                 (OnClickListener) null);

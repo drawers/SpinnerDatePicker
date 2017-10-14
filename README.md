@@ -1,27 +1,33 @@
 Spinner DatePicker
 -----
 
+## Summary
+
+The old "spinner" style DatePicker for newer devices.
+
+![ScreenShot](https://imgur.com/jhg39Tb)
+
 ## Motivation
 
-The default Material Design DatePicker has poor usability for choosing a date of birth. It seems it is hard for users to find the "year" button and they will often simply swipe left or right through the months in order to find their date of birth. The previous Holo DatePicker with sliding NumberPickers is much more suitable for this use case however it is no longer available for Marshmallow devices and up. 
+The default Material Design DatePicker has poor usability for choosing a date of birth. It seems it is hard for users to find the "year" button and they will often simply swipe left or right through the months in order to find their date of birth. 
 
-This type of DatePicker is still available in the standard open source Contacts app where it is used as a DatePicker for the birthday of a contact. You can see the result with the following procedure:
+![MaterialDesign](https://imgur.com/8lmZhbd)
 
-1. Open the Contacts app
-2. Click on a Contact to see more detail
-3. Click on the floating action bar for edit
-4. Scroll down and click on "More fields"
-5. Scroll down and click on "Date"
+The previous Holo DatePicker with sliding NumberPickers is much more suitable for this use case however it is no longer available for Marshmallow devices and up. 
 
-This library is heavily based on this open source Contacts app DatePicker with the addition of being able to style the NumberPickers (the dials/spinners in the DatePicker). 
+This library is heavily based on the open source Contacts App DatePicker (source code [here](https://android.googlesource.com/platform/packages/apps/ContactsCommon/)) with the addition of being able to style the NumberPickers (the dials/spinners in the DatePicker). 
 
-You can style the DatePicker easily with a style:
+## Adding styles
+
+The DatePicker is the simple aggregation of three NumberPickers. You can style the DatePicker easily with a NumberPicker style:
 
     <style name="NumbePickerStyle">
         <item name="android:textSize">22dp</item>
         <item name="android:textColorPrimary">@color/colorAccent</item>
         <item name="android:colorControlNormal" tools:targetApi="lollipop">@color/colorAccent</item>
     </style>
+
+where `colorControlNormal` is the color of the horizontal bars (dividers) in the `NumberPicker`. See [this StackOverflow question](https://stackoverflow.com/q/20148671/5241933)
 
 And then:
 
@@ -34,6 +40,8 @@ And then:
                 .dayOfMonth(dayOfMonth)
                 .build()
                 .show();
+
+The example project should make it clear - get it by cloning the repo.                    
                     
 ## Usage in a project
 
@@ -41,17 +49,17 @@ Add the following to your **project** level `build.gradle`:
     
    ```gradle
    allprojects {
-   	repositories {
-   		maven { url "https://jitpack.io" }
-   	}
+       repositories {
+           maven { url "https://jitpack.io" }
+   	   }
    }
    ```
 
-Add this to your app `build.gradle`:
+Add this to your **app level** `build.gradle`:
     
    ```gradle
    dependencies {
-   	compile 'com.github.drawers:SpinnerDatePicker:0.0.4'
+       compile 'com.github.drawers:SpinnerDatePicker:0.0.4'
    }
    ```             
                 

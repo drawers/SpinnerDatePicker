@@ -5,13 +5,13 @@ Spinner DatePicker
 
 The old "spinner" style DatePicker for newer devices.
 
-![ScreenShot](https://imgur.com/jhg39Tb)
+![ScreenShot](https://i.imgur.com/jhg39Tb.png)
 
 ## Motivation
 
 The default Material Design DatePicker has poor usability for choosing a date of birth. It seems it is hard for users to find the "year" button and they will often simply swipe left or right through the months in order to find their date of birth. 
 
-![MaterialDesign](https://imgur.com/8lmZhbd)
+![MaterialDesign](https://i.imgur.com/8lmZhbd.png)
 
 The previous Holo DatePicker with sliding NumberPickers is much more suitable for this use case however it is no longer available for Marshmallow devices and up. 
 

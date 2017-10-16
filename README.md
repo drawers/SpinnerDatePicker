@@ -59,10 +59,10 @@ Add this to your **app level** `build.gradle`:
     
    ```gradle
    dependencies {
-       compile 'com.github.drawers:SpinnerDatePicker:0.0.4'
+       compile 'com.github.drawers:SpinnerDatePicker:0.0.6@aar'
    }
    ```             
-                
+
 License
 =======
 

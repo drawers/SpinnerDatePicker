@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SpinnerDatePicker.iml" filepath="$PROJECT_DIR$/SpinnerDatePicker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SpinnerDatePickerExample/SpinnerDatePickerExample.iml" filepath="$PROJECT_DIR$/SpinnerDatePickerExample/SpinnerDatePickerExample.iml" />
       <module fileurl="file://$PROJECT_DIR$/SpinnerDatePickerLib/SpinnerDatePickerLib.iml" filepath="$PROJECT_DIR$/SpinnerDatePickerLib/SpinnerDatePickerLib.iml" />
     </modules>
   </component>

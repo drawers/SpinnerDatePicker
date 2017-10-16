@@ -8,7 +8,6 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/SpinnerDatePickerExample" />
             <option value="$PROJECT_DIR$/SpinnerDatePickerLib" />
           </set>
         </option>

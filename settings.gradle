@@ -1,2 +1,2 @@
-include ':SpinnerDatePickerExample', ':SpinnerDatePickerLib'
+include ':SpinnerDatePickerLib'
 rootProject.name = 'SpinnerDatePicker'

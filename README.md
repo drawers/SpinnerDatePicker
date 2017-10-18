@@ -59,9 +59,14 @@ Add this to your **app level** `build.gradle`:
     
    ```gradle
    dependencies {
-       compile 'com.github.drawers:SpinnerDatePicker:0.0.6@aar'
+       compile 'com.github.drawers:SpinnerDatePicker:0.0.7'
    }
    ```             
+
+Philosophy
+==========
+
+The aim of this project is to produce a lightweight and robust DatePicker. Hence the library has no external dependencies and no fancy features. Espresso automated UI pesting is performed on the sample project using Firebase test lab. When more funds are available, more devices will be tested.
 
 License
 =======

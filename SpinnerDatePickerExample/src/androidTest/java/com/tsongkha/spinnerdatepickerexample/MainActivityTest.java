@@ -1,7 +1,10 @@
 package com.tsongkha.spinnerdatepickerexample;
 
+import android.support.test.espresso.action.EspressoKey;
+import android.support.test.espresso.action.ViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.KeyEvent;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -126,5 +129,35 @@ public class MainActivityTest {
 
         //assert
         onView(withId(R.id.date_textview)).check(matches(withText("15 10 1960")));
+    }
+
+    @Test
+    public void testDaysInMonthDecreaseViaMonthChange() throws Exception {
+        mainActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mainActivity.showDate(1980, 0, 31, R.style.DatePickerSpinner);
+            }
+        });
+
+        onView(withId(com.tsongkha.spinnerdatepicker.R.id.month))
+                .perform(ViewActions.pressKey(KeyEvent.KEYCODE_DPAD_DOWN));
+        onView(withId(com.tsongkha.spinnerdatepicker.R.id.day))
+                .check(NumberPickers.isDisplayed("29"));
+    }
+
+    @Test
+    public void testDaysInMonthDecreaseViaYearChange() throws Exception {
+        mainActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mainActivity.showDate(1980, 1, 29, R.style.DatePickerSpinner);
+            }
+        });
+
+        onView(withId(com.tsongkha.spinnerdatepicker.R.id.year))
+                .perform(ViewActions.pressKey(KeyEvent.KEYCODE_DPAD_DOWN));
+        onView(withId(com.tsongkha.spinnerdatepicker.R.id.day))
+                .check(NumberPickers.isDisplayed("28"));
     }
 }

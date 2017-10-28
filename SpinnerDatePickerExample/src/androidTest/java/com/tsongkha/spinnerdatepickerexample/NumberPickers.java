@@ -11,6 +11,8 @@ import android.widget.NumberPicker;
 import org.hamcrest.Matcher;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -59,7 +61,8 @@ class NumberPickers {
 
     public static NumberPicker.OnValueChangeListener getOnValueChangeListener(NumberPicker numberPicker) {
         try {
-            Field onValueChangedListener = NumberPicker.class.getDeclaredField("mOnValueChangeListener");
+            Field onValueChangedListener = NumberPicker.class.getDeclaredField(
+                    "mOnValueChangeListener");
             onValueChangedListener.setAccessible(true);
             return (NumberPicker.OnValueChangeListener) onValueChangedListener.get(numberPicker);
         } catch (NoSuchFieldException | IllegalAccessException e) {

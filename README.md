@@ -1,4 +1,4 @@
-[![API](https://img.shields.io/badge/API-15%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=15)[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SpinnerDatePicker-red.svg?style=plastic)](https://android-arsenal.com/details/1/6319)[![Release](https://jitpack.io/v/User/Repo.svg)](https://jitpack.io/#User/Repo)
+[![API](https://img.shields.io/badge/API-15%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=15)[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SpinnerDatePicker-red.svg?style=plastic)](https://android-arsenal.com/details/1/6319)[![Release](https://jitpack.io/v/User/Repo.svg)](https://jitpack.io/#drawers/SpinnerDatePicker)
 
 Spinner DatePicker
 -----
@@ -17,7 +17,7 @@ The default Material Design DatePicker has poor usability for choosing a date of
 
 The previous Holo DatePicker with sliding NumberPickers is much more suitable for this use case however it is no longer available for Marshmallow devices and up. 
 
-This library is heavily based on the open source Contacts App DatePicker (source code [here](https://android.googlesource.com/platform/packages/apps/ContactsCommon/)) with the addition of being able to style the NumberPickers (the dials/spinners in the DatePicker). 
+This library is heavily based on the [Android Open Source Project](https://source.android.com/) Contacts App DatePicker (source code [here](https://android.googlesource.com/platform/packages/apps/ContactsCommon/)) with the addition of being able to style the NumberPickers (the dials/spinners in the DatePicker).
 
 ## Adding styles
 

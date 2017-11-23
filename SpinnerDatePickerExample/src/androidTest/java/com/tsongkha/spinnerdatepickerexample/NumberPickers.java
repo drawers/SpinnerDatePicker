@@ -21,6 +21,7 @@ import static junit.framework.Assert.assertEquals;
  */
 
 class NumberPickers {
+
     public static ViewAction setNumber(final int num) {
         return new ViewAction() {
             @Override
@@ -33,6 +34,27 @@ class NumberPickers {
             @Override
             public String getDescription() {
                 return "Set the passed number into the NumberPicker";
+            }
+
+            @Override
+            public Matcher<View> getConstraints() {
+                return ViewMatchers.isAssignableFrom(NumberPicker.class);
+            }
+        };
+    }
+
+    public static ViewAction scroll(final int yOffsetInDp) {
+        return new ViewAction() {
+            @Override
+            public void perform(UiController uiController, View view) {
+                NumberPicker np = (NumberPicker) view;
+                int yOffsetInPx = (int) (yOffsetInDp * view.getResources().getDisplayMetrics().density);
+                np.scrollBy(0, yOffsetInPx);
+            }
+
+            @Override
+            public String getDescription() {
+                return "Scroll up or down a given yOffset in dp";
             }
 
             @Override

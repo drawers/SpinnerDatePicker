@@ -1,3 +1,5 @@
+[![API](https://img.shields.io/badge/API-15%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=15)[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SpinnerDatePicker-red.svg?style=plastic)](https://android-arsenal.com/details/1/6319)[![Release](https://jitpack.io/v/User/Repo.svg)](https://jitpack.io/#User/Repo)
+
 Spinner DatePicker
 -----
 
@@ -21,7 +23,7 @@ This library is heavily based on the open source Contacts App DatePicker (source
 
 The DatePicker is the simple aggregation of three NumberPickers. You can style the DatePicker easily with a NumberPicker style:
 
-    <style name="NumbePickerStyle">
+    <style name="NumberPickerStyle">
         <item name="android:textSize">22dp</item>
         <item name="android:textColorPrimary">@color/colorAccent</item>
         <item name="android:colorControlNormal" tools:targetApi="lollipop">@color/colorAccent</item>
@@ -59,7 +61,7 @@ Add this to your **app level** `build.gradle`:
     
    ```gradle
    dependencies {
-       compile 'com.github.drawers:SpinnerDatePicker:0.0.7'
+       compile 'com.github.drawers:SpinnerDatePicker:0.1.1'
    }
    ```             
 
@@ -68,10 +70,15 @@ Philosophy
 
 The aim of this project is to produce a lightweight and robust DatePicker. Hence the library has no external dependencies and no fancy features. Espresso automated UI pesting is performed on the sample project using Firebase test lab. When more funds are available, more devices will be tested.
 
+Contributing
+============
+
+Please open an issue first before making a pull request. Pull requests should be accompanied by tests.
+
 License
 =======
 
-Copyright 2017 Android Open Source Project, David Rawson
+Copyright 2017 David Rawson
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

@@ -1,10 +1,7 @@
 package com.tsongkha.spinnerdatepickerexample;
 
-import android.support.test.espresso.action.EspressoKey;
-import android.support.test.espresso.action.ViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.view.KeyEvent;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -21,6 +18,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
+
+    public static final int SCROLL_DISTANCE = 40;
 
     @Rule
     public ActivityTestRule<MainActivity> mainActivityActivityTestRule = new ActivityTestRule<>(MainActivity.class, true, false);
@@ -141,7 +140,7 @@ public class MainActivityTest {
         });
 
         onView(withId(com.tsongkha.spinnerdatepicker.R.id.month))
-                .perform(ViewActions.pressKey(KeyEvent.KEYCODE_DPAD_DOWN));
+                .perform(NumberPickers.scroll(-SCROLL_DISTANCE));
         onView(withId(com.tsongkha.spinnerdatepicker.R.id.day))
                 .check(NumberPickers.isDisplayed("29"));
     }
@@ -156,7 +155,7 @@ public class MainActivityTest {
         });
 
         onView(withId(com.tsongkha.spinnerdatepicker.R.id.year))
-                .perform(ViewActions.pressKey(KeyEvent.KEYCODE_DPAD_DOWN));
+                .perform(NumberPickers.scroll(-SCROLL_DISTANCE));
         onView(withId(com.tsongkha.spinnerdatepicker.R.id.day))
                 .check(NumberPickers.isDisplayed("28"));
     }

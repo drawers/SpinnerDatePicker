@@ -71,7 +71,7 @@ The aim of this project is to produce a lightweight and robust DatePicker. Hence
 License
 =======
 
-Copyright 2017 David Rawson
+Copyright 2017 Android Open Source Project, David Rawson
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

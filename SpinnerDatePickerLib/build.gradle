@@ -2,17 +2,16 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 
 group = 'com.github.drawers'
-version = '0.0.7'
+version = '0.1.1'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
 
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 7
-        versionName "0.0.7"
+        versionCode 11
+        versionName "0.1.1"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

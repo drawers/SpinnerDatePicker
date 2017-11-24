@@ -68,12 +68,12 @@ Add this to your **app level** `build.gradle`:
 Philosophy
 ==========
 
-The aim of this project is to produce a lightweight and robust DatePicker. Hence the library has no external dependencies and no fancy features. Espresso automated UI pesting is performed on the sample project using Firebase test lab. When more funds are available, more devices will be tested.
+The aim of this project is to produce a lightweight and robust DatePicker with an API similar to that of the standard Android DatePicker. Hence the library has no external dependencies and no fancy features. Espresso automated UI testing is performed on the sample project using Firebase test lab.
 
 Contributing
 ============
 
-Please open an issue first before making a pull request. Pull requests should be accompanied by tests.
+Please open an issue first before making a pull request. Pull requests should be accompanied by tests if possible.
 
 License
 =======

@@ -1,8 +1,5 @@
 package com.tsongkha.spinnerdatepicker;
 
-// This is a fork of the standard Android DatePicker that additionally allows toggling the year
-// on/off.
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,25 +11,17 @@ import android.view.ViewGroup;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
- * A simple dialog containing an {@link DatePicker}.
- * <p>
- * <p>See the <a href="{@docRoot}resources/tutorials/views/hello-datepicker.html">Date Picker
- * tutorial</a>.</p>
+ * A fork of the Android Open Source Project DatePickerDialog class
  */
 public class DatePickerDialog extends AlertDialog implements OnClickListener,
         DatePicker.OnDateChangedListener {
 
-    /**
-     * Magic year that represents "no year"
-     */
-    public static int NO_YEAR = DatePicker.NO_YEAR;
-
     private static final String YEAR = "year";
     private static final String MONTH = "month";
     private static final String DAY = "day";
-    private static final String YEAR_OPTIONAL = "year_optional";
 
     private final DatePicker mDatePicker;
     private final OnDateSetListener mCallBack;
@@ -49,8 +38,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
     public interface OnDateSetListener {
         /**
          * @param view        The view associated with this listener.
-         * @param year        The year that was set or {@link DatePickerDialog#NO_YEAR} if the user has
-         *                    not specified a year
+         * @param year        The year that was set
          * @param monthOfYear The month that was set (0-11) for compatibility
          *                    with {@link java.util.Calendar}.
          * @param dayOfMonth  The day of the month that was set.
@@ -65,7 +53,8 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
                      int year,
                      int monthOfYear,
                      int dayOfMonth,
-                     boolean yearOptional) {
+                     Date minDate,
+                     Date maxDate) {
         super(context, theme);
 
         mCallBack = callBack;
@@ -86,8 +75,8 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
                 (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.date_picker_dialog_container, null);
         setView(view);
-        mDatePicker = new DatePicker(context, (ViewGroup) view, spinnerTheme);
-        mDatePicker.init(mInitialYear, mInitialMonth, mInitialDay, yearOptional, this);
+        mDatePicker = new DatePicker(context, (ViewGroup) view, spinnerTheme, minDate, maxDate);
+        mDatePicker.init(mInitialYear, mInitialMonth, mInitialDay, this);
     }
 
     @Override
@@ -116,8 +105,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, day);
-        final DateFormat dateFormat =
-                year == NO_YEAR ? mTitleNoYearDateFormat : mTitleDateFormat;
+        final DateFormat dateFormat = mTitleDateFormat;
         setTitle(dateFormat.format(calendar.getTime()));
     }
 
@@ -127,7 +115,6 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         state.putInt(YEAR, mDatePicker.getYear());
         state.putInt(MONTH, mDatePicker.getMonth());
         state.putInt(DAY, mDatePicker.getDayOfMonth());
-        state.putBoolean(YEAR_OPTIONAL, mDatePicker.isYearOptional());
         return state;
     }
 
@@ -137,8 +124,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         int year = savedInstanceState.getInt(YEAR);
         int month = savedInstanceState.getInt(MONTH);
         int day = savedInstanceState.getInt(DAY);
-        boolean yearOptional = savedInstanceState.getBoolean(YEAR_OPTIONAL);
-        mDatePicker.init(year, month, day, yearOptional, this);
+        mDatePicker.init(year, month, day, this);
         updateTitle(year, month, day);
     }
 }

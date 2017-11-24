@@ -1,6 +1,10 @@
 package com.tsongkha.spinnerdatepicker;
 
 import android.content.Context;
+import android.widget.Spinner;
+
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class SpinnerDatePickerDialogBuilder {
 
@@ -12,6 +16,8 @@ public class SpinnerDatePickerDialogBuilder {
     private boolean yearOptional = false;
     private int theme = -1;                 //default theme
     private int spinnerTheme = -1;          //default theme
+    private Date minDate = new GregorianCalendar(1900, 0, 1).getTime();
+    private Date maxDate = new GregorianCalendar(2100, 0, 1).getTime();
 
     public SpinnerDatePickerDialogBuilder context(Context context) {
         this.context = context;
@@ -48,9 +54,24 @@ public class SpinnerDatePickerDialogBuilder {
         return this;
     }
 
+    public SpinnerDatePickerDialogBuilder defaultDate(int year, int monthIndexedFromZero, int day) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    public SpinnerDatePickerDialogBuilder minDate(int year, int monthIndexedFromZero, int day) {
+        this.minDate = new GregorianCalendar(year, monthIndexedFromZero, day).getTime();
+        return this;
+    }
+
+    public SpinnerDatePickerDialogBuilder maxDate(int year, int monthIndexedFromZero, int day) {
+        this.maxDate = new GregorianCalendar(year, monthIndexedFromZero, day).getTime();
+        return this;
+    }
+
     public DatePickerDialog build() {
         if (context == null) throw new IllegalArgumentException("Context must not be null");
+        if (maxDate.getTime() <= minDate.getTime()) throw new IllegalArgumentException("Max date is not after Min date");
 
-        return new DatePickerDialog(context, theme, spinnerTheme, callBack, year, monthOfYear, dayOfMonth, false);
+        return new DatePickerDialog(context, theme, spinnerTheme, callBack, year, monthOfYear, dayOfMonth, minDate, maxDate);
     }
 }

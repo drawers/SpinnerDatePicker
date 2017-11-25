@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * A fork of the Android Open Source Project DatePickerDialog class
@@ -70,10 +69,10 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
                 (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.date_picker_dialog_container, null);
         setView(view);
-        mDatePicker = new DatePicker(context, (ViewGroup) view, spinnerTheme);
+        mDatePicker = new DatePicker((ViewGroup) view, spinnerTheme);
         mDatePicker.setMinDate(minDate.getTimeInMillis());
         mDatePicker.setMaxDate(maxDate.getTimeInMillis());
-        mDatePicker.init(defaultDate.get(Calendar.YEAR), defaultDate.get(Calendar.MONTH), defaultDate.get(Calendar.DAY_OF_MONTH), isYearOptional, this);
+        mDatePicker.init(defaultDate.get(Calendar.YEAR), defaultDate.get(Calendar.MONTH), defaultDate.get(Calendar.DAY_OF_MONTH), this);
     }
 
     @Override

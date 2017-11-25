@@ -55,9 +55,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 .context(MainActivity.this)
                 .callback(MainActivity.this)
                 .spinnerTheme(spinnerTheme)
-                .year(year)
-                .monthOfYear(monthOfYear)
-                .dayOfMonth(dayOfMonth)
+                .defaultDate(year, monthOfYear, dayOfMonth)
+                .yearOptional(true)
                 .build()
                 .show();
     }

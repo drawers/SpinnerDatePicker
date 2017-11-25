@@ -50,18 +50,13 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
                      int theme,
                      int spinnerTheme,
                      OnDateSetListener callBack,
-                     int year,
-                     int monthOfYear,
-                     int dayOfMonth,
-                     Date minDate,
-                     Date maxDate) {
+                     Calendar defaultDate,
+                     Calendar minDate,
+                     Calendar maxDate,
+                     boolean isYearOptional) {
         super(context, theme);
 
         mCallBack = callBack;
-        mInitialYear = year;
-        mInitialMonth = monthOfYear;
-        mInitialDay = dayOfMonth;
-
         mTitleDateFormat = DateFormat.getDateInstance(DateFormat.LONG);
         mTitleNoYearDateFormat = DateUtils.getLocalizedDateFormatWithoutYear(getContext());
         updateTitle(mInitialYear, mInitialMonth, mInitialDay);
@@ -75,8 +70,10 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
                 (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.date_picker_dialog_container, null);
         setView(view);
-        mDatePicker = new DatePicker(context, (ViewGroup) view, spinnerTheme, minDate, maxDate);
-        mDatePicker.init(mInitialYear, mInitialMonth, mInitialDay, this);
+        mDatePicker = new DatePicker(context, (ViewGroup) view, spinnerTheme);
+        mDatePicker.setMinDate(minDate.getTimeInMillis());
+        mDatePicker.setMaxDate(maxDate.getTimeInMillis());
+        mDatePicker.init(defaultDate.get(Calendar.YEAR), defaultDate.get(Calendar.MONTH), defaultDate.get(Calendar.DAY_OF_MONTH), isYearOptional, this);
     }
 
     @Override
@@ -124,7 +121,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         int year = savedInstanceState.getInt(YEAR);
         int month = savedInstanceState.getInt(MONTH);
         int day = savedInstanceState.getInt(DAY);
-        mDatePicker.init(year, month, day, this);
         updateTitle(year, month, day);
+        throw new UnsupportedOperationException("not implemented yet");
     }
 }

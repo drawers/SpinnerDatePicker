@@ -1,5 +1,6 @@
 package com.tsongkha.spinnerdatepickerexample;
 
+import android.support.test.espresso.action.ViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -19,7 +20,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
 
-    public static final int SCROLL_DISTANCE = 40;
+    public static final int SCROLL_UP = 40;
+    public static final int SCROLL_DOWN = -40;
 
     @Rule
     public ActivityTestRule<MainActivity> mainActivityActivityTestRule = new ActivityTestRule<>(MainActivity.class, true, false);
@@ -60,7 +62,7 @@ public class MainActivityTest {
         });
 
         //assert
-        onView(withId(R.id.day)).perform(NumberPickers.setNumber(10)).check(NumberPickers.isDisplayed("10"));
+        onView(withId(R.id.day)).perform(NumberPickers.scroll(SCROLL_DOWN)).check(NumberPickers.isDisplayed("2"));
     }
 
     @Test
@@ -74,7 +76,7 @@ public class MainActivityTest {
         });
 
         //assert
-        onView(withId(R.id.month)).perform(NumberPickers.setNumber(3)).check(NumberPickers.isDisplayed("Mar"));
+        onView(withId(R.id.month)).perform(NumberPickers.scroll(SCROLL_DOWN * 3)).check(NumberPickers.isDisplayed("Mar"));
     }
 
     @Test
@@ -88,7 +90,7 @@ public class MainActivityTest {
         });
 
         //assert
-        onView(withId(R.id.year)).perform(NumberPickers.setNumber(1970)).check(NumberPickers.isDisplayed("1970"));
+        onView(withId(R.id.year)).perform(NumberPickers.scroll(SCROLL_UP)).check(NumberPickers.isDisplayed("1979"));
     }
 
     @Test
@@ -118,12 +120,12 @@ public class MainActivityTest {
     public void testSetDate() throws Exception {
         //act
         onView(withId(R.id.set_date_button)).perform(click());
-        onView(withId(com.tsongkha.spinnerdatepicker.R.id.day))
-                .perform(NumberPickers.setNumber(15));
         onView(withId(com.tsongkha.spinnerdatepicker.R.id.month))
-                .perform(NumberPickers.setNumber(10));
+                .perform(NumberPickers.typeInNumberPicker("Oct")); //TODO: fix so that typing in day first will work - looks like bug in AOSP
+        onView(withId(com.tsongkha.spinnerdatepicker.R.id.day))
+                .perform(NumberPickers.typeInNumberPicker("15"));
         onView(withId(com.tsongkha.spinnerdatepicker.R.id.year))
-                .perform(NumberPickers.setNumber(1960));
+                .perform(NumberPickers.typeInNumberPicker("1960"));
         onView(withText(android.R.string.ok)).perform(click());
 
         //assert
@@ -140,7 +142,7 @@ public class MainActivityTest {
         });
 
         onView(withId(com.tsongkha.spinnerdatepicker.R.id.month))
-                .perform(NumberPickers.scroll(-SCROLL_DISTANCE));
+                .perform(NumberPickers.scroll(SCROLL_DOWN));
         onView(withId(com.tsongkha.spinnerdatepicker.R.id.day))
                 .check(NumberPickers.isDisplayed("29"));
     }
@@ -155,8 +157,8 @@ public class MainActivityTest {
         });
 
         onView(withId(com.tsongkha.spinnerdatepicker.R.id.year))
-                .perform(NumberPickers.scroll(-SCROLL_DISTANCE));
+                .perform(NumberPickers.scroll(SCROLL_DOWN));
         onView(withId(com.tsongkha.spinnerdatepicker.R.id.day))
-                .check(NumberPickers.isDisplayed("28"));
+                .check(NumberPickers.isDisplayed("1"));
     }
 }

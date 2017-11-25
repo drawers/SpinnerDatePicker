@@ -1,7 +1,6 @@
 package com.tsongkha.spinnerdatepicker;
 
 import android.content.Context;
-import android.widget.SpinnerAdapter;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -53,15 +52,10 @@ public class SpinnerDatePickerDialogBuilder {
         return this;
     }
 
-    public SpinnerDatePickerDialogBuilder yearOptional(boolean isYearOptional) {
-        this.isYearOptional = isYearOptional;
-        return this;
-    }
-
     public DatePickerDialog build() {
         if (context == null) throw new IllegalArgumentException("Context must not be null");
         if (maxDate.getTime().getTime() <= minDate.getTime().getTime()) throw new IllegalArgumentException("Max date is not after Min date");
 
-        return new DatePickerDialog(context, theme, spinnerTheme, callBack, defaultDate, minDate, maxDate, isYearOptional);
+        return new DatePickerDialog(context, theme, spinnerTheme, callBack, defaultDate, minDate, maxDate);
     }
 }

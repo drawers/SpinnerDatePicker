@@ -34,10 +34,7 @@ import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.TextView;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.text.DateFormatSymbols;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -68,7 +65,7 @@ public class DatePicker extends FrameLayout {
 
     private Context mContext;
 
-    private DatePicker.OnDateChangedListener mOnDateChangedListener;
+    private OnDateChangedListener mOnDateChangedListener;
 
     private String[] mShortMonths;
 
@@ -130,31 +127,33 @@ public class DatePicker extends FrameLayout {
                 setDate(mTempDate.get(Calendar.YEAR), mTempDate.get(Calendar.MONTH),
                         mTempDate.get(Calendar.DAY_OF_MONTH));
                 updateSpinners();
-                notifyDateChanged();
             }
         };
 
         // day
         mDaySpinner = (NumberPicker) inflater.inflate(R.layout.number_picker_day_month, mPickerContainer, false);
+        mDaySpinner.setId(R.id.day);
         mDaySpinner.setFormatter(new TwoDigitFormatter());
         mDaySpinner.setOnLongPressUpdateInterval(100);
         mDaySpinner.setOnValueChangedListener(onChangeListener);
-        mDaySpinnerInput = findEditText(mDaySpinner);
+        mDaySpinnerInput = NumberPickers.findEditText(mDaySpinner);
 
         // month
         mMonthSpinner = (NumberPicker) inflater.inflate(R.layout.number_picker_day_month, mPickerContainer, false);
+        mMonthSpinner.setId(R.id.month);
         mMonthSpinner.setMinValue(0);
         mMonthSpinner.setMaxValue(mNumberOfMonths - 1);
         mMonthSpinner.setDisplayedValues(mShortMonths);
         mMonthSpinner.setOnLongPressUpdateInterval(200);
         mMonthSpinner.setOnValueChangedListener(onChangeListener);
-        mMonthSpinnerInput = findEditText(mMonthSpinner);
+        mMonthSpinnerInput = NumberPickers.findEditText(mMonthSpinner);
 
         // year
         mYearSpinner = (NumberPicker) inflater.inflate(R.layout.number_picker_year, mPickerContainer, false);
+        mYearSpinner.setId(R.id.year);
         mYearSpinner.setOnLongPressUpdateInterval(100);
         mYearSpinner.setOnValueChangedListener(onChangeListener);
-        mYearSpinnerInput = findEditText(mYearSpinner);
+        mYearSpinnerInput = NumberPickers.findEditText(mYearSpinner);
 
         // initialize to current date
         mCurrentDate.setTimeInMillis(System.currentTimeMillis());
@@ -170,15 +169,15 @@ public class DatePicker extends FrameLayout {
         root.addView(this);
     }
 
-    public void init(int year, int monthOfYear, int dayOfMonth,
-                     DatePicker.OnDateChangedListener onDateChangedListener) {
+    void init(int year, int monthOfYear, int dayOfMonth,
+                     OnDateChangedListener onDateChangedListener) {
         setDate(year, monthOfYear, dayOfMonth);
         updateSpinners();
         mOnDateChangedListener = onDateChangedListener;
         notifyDateChanged();
     }
 
-    public void updateDate(int year, int month, int dayOfMonth) {
+    void updateDate(int year, int month, int dayOfMonth) {
         if (!isNewDate(year, month, dayOfMonth)) {
             return;
         }
@@ -187,19 +186,19 @@ public class DatePicker extends FrameLayout {
         notifyDateChanged();
     }
 
-    public int getYear() {
+    int getYear() {
         return mCurrentDate.get(Calendar.YEAR);
     }
 
-    public int getMonth() {
+    int getMonth() {
         return mCurrentDate.get(Calendar.MONTH);
     }
 
-    public int getDayOfMonth() {
+    int getDayOfMonth() {
         return mCurrentDate.get(Calendar.DAY_OF_MONTH);
     }
 
-    public void setMinDate(long minDate) {
+    void setMinDate(long minDate) {
         mTempDate.setTimeInMillis(minDate);
         if (mTempDate.get(Calendar.YEAR) == mMinDate.get(Calendar.YEAR)
                 && mTempDate.get(Calendar.DAY_OF_YEAR) == mMinDate.get(Calendar.DAY_OF_YEAR)) {
@@ -213,7 +212,7 @@ public class DatePicker extends FrameLayout {
         updateSpinners();
     }
 
-    public void setMaxDate(long maxDate) {
+    void setMaxDate(long maxDate) {
         mTempDate.setTimeInMillis(maxDate);
         if (mTempDate.get(Calendar.YEAR) == mMaxDate.get(Calendar.YEAR)
                 && mTempDate.get(Calendar.DAY_OF_YEAR) == mMaxDate.get(Calendar.DAY_OF_YEAR)) {
@@ -332,22 +331,6 @@ public class DatePicker extends FrameLayout {
         }
     }
 
-    /**
-     * Parses the given <code>date</code> and in case of success sets the result
-     * to the <code>outDate</code>.
-     *
-     * @return True if the date was parsed.
-     */
-    private boolean parseDate(String date, Calendar outDate) {
-        try {
-            outDate.setTime(mDateFormat.parse(date));
-            return true;
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     private boolean isNewDate(int year, int month, int dayOfMonth) {
         return (mCurrentDate.get(Calendar.YEAR) != year
                 || mCurrentDate.get(Calendar.MONTH) != month
@@ -438,7 +421,7 @@ public class DatePicker extends FrameLayout {
         } else {
             imeOptions = EditorInfo.IME_ACTION_DONE;
         }
-        TextView input = findEditText(spinner);
+        TextView input = NumberPickers.findEditText(spinner);
         input.setImeOptions(imeOptions);
     }
 
@@ -461,29 +444,5 @@ public class DatePicker extends FrameLayout {
                 inputMethodManager.hideSoftInputFromWindow(getWindowToken(), 0);
             }
         }
-    }
-
-    //inefficient way of obtaining EditText from inside NumberPicker - not too bad here as View
-    //hierarchy is very small -
-    private EditText findEditText(NumberPicker np) {
-        for (int i = 0; i < np.getChildCount(); i++) {
-            if (np.getChildAt(i) instanceof EditText) {
-                return (EditText) np.getChildAt(i);
-            }
-        }
-        return null;
-    }
-
-    public interface OnDateChangedListener {
-        /**
-         * Called upon a date change.
-         *
-         * @param view The view associated with this listener.
-         * @param year The year that was set.
-         * @param monthOfYear The month that was set (0-11) for compatibility
-         *            with {@link java.util.Calendar}.
-         * @param dayOfMonth The day of the month that was set.
-         */
-        void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth);
     }
 }

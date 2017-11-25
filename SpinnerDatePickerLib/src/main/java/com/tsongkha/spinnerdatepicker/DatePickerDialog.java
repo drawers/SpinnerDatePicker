@@ -16,7 +16,7 @@ import java.util.Calendar;
  * A fork of the Android Open Source Project DatePickerDialog class
  */
 public class DatePickerDialog extends AlertDialog implements OnClickListener,
-        DatePicker.OnDateChangedListener {
+        OnDateChangedListener {
 
     private static final String YEAR = "year";
     private static final String MONTH = "month";
@@ -25,11 +25,6 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
     private final DatePicker mDatePicker;
     private final OnDateSetListener mCallBack;
     private final DateFormat mTitleDateFormat;
-    private final DateFormat mTitleNoYearDateFormat;
-
-    private int mInitialYear;
-    private int mInitialMonth;
-    private int mInitialDay;
 
     /**
      * The callback used to indicate the user is done filling in the date.
@@ -51,14 +46,13 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
                      OnDateSetListener callBack,
                      Calendar defaultDate,
                      Calendar minDate,
-                     Calendar maxDate,
-                     boolean isYearOptional) {
+                     Calendar maxDate) {
         super(context, theme);
 
         mCallBack = callBack;
         mTitleDateFormat = DateFormat.getDateInstance(DateFormat.LONG);
-        mTitleNoYearDateFormat = DateUtils.getLocalizedDateFormatWithoutYear(getContext());
-        updateTitle(mInitialYear, mInitialMonth, mInitialDay);
+
+        updateTitle(defaultDate);
 
         setButton(BUTTON_POSITIVE, context.getText(android.R.string.ok),
                 this);
@@ -73,6 +67,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         mDatePicker.setMinDate(minDate.getTimeInMillis());
         mDatePicker.setMaxDate(maxDate.getTimeInMillis());
         mDatePicker.init(defaultDate.get(Calendar.YEAR), defaultDate.get(Calendar.MONTH), defaultDate.get(Calendar.DAY_OF_MONTH), this);
+
     }
 
     @Override
@@ -86,23 +81,16 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
 
     @Override
     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        updateTitle(year, monthOfYear, dayOfMonth);
+        Calendar updatedDate = Calendar.getInstance();
+        updatedDate.set(Calendar.YEAR, year);
+        updatedDate.set(Calendar.MONTH, monthOfYear);
+        updatedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        updateTitle(updatedDate);
     }
 
-    public void updateDate(int year, int monthOfYear, int dayOfMonth) {
-        mInitialYear = year;
-        mInitialMonth = monthOfYear;
-        mInitialDay = dayOfMonth;
-        mDatePicker.updateDate(year, monthOfYear, dayOfMonth);
-    }
-
-    private void updateTitle(int year, int month, int day) {
-        final Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.DAY_OF_MONTH, day);
+    private void updateTitle(Calendar updatedDate) {
         final DateFormat dateFormat = mTitleDateFormat;
-        setTitle(dateFormat.format(calendar.getTime()));
+        setTitle(dateFormat.format(updatedDate.getTime()));
     }
 
     @Override
@@ -120,7 +108,11 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         int year = savedInstanceState.getInt(YEAR);
         int month = savedInstanceState.getInt(MONTH);
         int day = savedInstanceState.getInt(DAY);
-        updateTitle(year, month, day);
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, day);
+        updateTitle(c);
         throw new UnsupportedOperationException("not implemented yet");
     }
 }

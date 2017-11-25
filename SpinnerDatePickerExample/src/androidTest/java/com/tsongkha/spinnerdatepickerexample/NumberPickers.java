@@ -4,8 +4,10 @@ import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.ViewAssertion;
+import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 
 import org.hamcrest.Matcher;
@@ -14,6 +16,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import static android.support.test.espresso.Espresso.onView;
 import static junit.framework.Assert.assertEquals;
 
 /**
@@ -29,6 +32,27 @@ class NumberPickers {
                 NumberPicker np = (NumberPicker) view;
                 np.setValue(num);
                 getOnValueChangeListener(np).onValueChange(np, num, num);
+            }
+
+            @Override
+            public String getDescription() {
+                return "Set the passed number into the NumberPicker";
+            }
+
+            @Override
+            public Matcher<View> getConstraints() {
+                return ViewMatchers.isAssignableFrom(NumberPicker.class);
+            }
+        };
+    }
+
+    public static ViewAction typeInNumberPicker(final String value) {
+        return new ViewAction() {
+            @Override
+            public void perform(UiController uiController, View view) {
+                NumberPicker np = (NumberPicker) view;
+                EditText et = com.tsongkha.spinnerdatepicker.NumberPickers.findEditText(np);
+                ViewActions.typeText(value).perform(uiController, et);
             }
 
             @Override
@@ -74,7 +98,7 @@ class NumberPickers {
                 if (displayedValues == null) {
                     actualPicked = Integer.toString(numberPicker.getValue());
                 } else {
-                    actualPicked = numberPicker.getDisplayedValues()[numberPicker.getValue() - 1];
+                    actualPicked = numberPicker.getDisplayedValues()[numberPicker.getValue()];
                 }
                 assertEquals(expectedPick, actualPicked);
             }

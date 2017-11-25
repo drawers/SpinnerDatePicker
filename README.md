@@ -37,9 +37,9 @@ And then:
                 .context(MainActivity.this)
                 .callback(MainActivity.this)
                 .spinnerTheme(spinnerTheme)
-                .year(year)
-                .monthOfYear(monthOfYear)
-                .dayOfMonth(dayOfMonth)
+                .defaultDate(2017, 0, 1)
+                .maxDate(2000, 0, 1)
+                .minDate(2020, 0, 1)
                 .build()
                 .show();
 
@@ -61,7 +61,7 @@ Add this to your **app level** `build.gradle`:
     
    ```gradle
    dependencies {
-       compile 'com.github.drawers:SpinnerDatePicker:0.1.1'
+       compile 'com.github.drawers:SpinnerDatePicker:1.0.0'
    }
    ```             
 

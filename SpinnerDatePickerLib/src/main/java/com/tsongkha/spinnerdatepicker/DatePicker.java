@@ -18,6 +18,8 @@ package com.tsongkha.spinnerdatepicker;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.InputType;
 import android.text.format.DateFormat;
 import android.view.ContextThemeWrapper;
@@ -443,6 +445,68 @@ public class DatePicker extends FrameLayout {
                 mDaySpinnerInput.clearFocus();
                 inputMethodManager.hideSoftInputFromWindow(getWindowToken(), 0);
             }
+        }
+    }
+
+    @Override protected Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+
+        return new SavedState(superState, mCurrentDate, mMinDate, mMaxDate);
+    }
+
+    @Override protected void onRestoreInstanceState(Parcelable state) {
+        SavedState ss = (SavedState) state;
+        super.onRestoreInstanceState(ss.getSuperState());
+        mCurrentDate = Calendar.getInstance();
+        mCurrentDate.setTimeInMillis(ss.currentDate);
+        mMinDate = Calendar.getInstance();
+        mMinDate.setTimeInMillis(ss.minDate);
+        mMaxDate = Calendar.getInstance();
+        mMaxDate.setTimeInMillis(ss.maxDate);
+        updateSpinners();
+    }
+
+    private static class SavedState extends BaseSavedState {
+
+        @SuppressWarnings("unused") public static final Parcelable.Creator<SavedState> CREATOR = new Creator<SavedState>() {
+
+            @Override public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            @Override public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
+        final long currentDate;
+        final long minDate;
+        final long maxDate;
+
+        /**
+         * Constructor called from {@link DatePicker#onSaveInstanceState()}
+         */
+        SavedState(Parcelable superState, Calendar currentDate, Calendar minDate, Calendar maxDate) {
+            super(superState);
+            this.currentDate = currentDate.getTimeInMillis();
+            this.minDate = minDate.getTimeInMillis();
+            this.maxDate = maxDate.getTimeInMillis();
+        }
+
+        /**
+         * Constructor called from {@link #CREATOR}
+         */
+        private SavedState(Parcel in) {
+            super(in);
+            this.currentDate = in.readLong();
+            this.minDate = in.readLong();
+            this.maxDate = in.readLong();
+        }
+
+        @Override public void writeToParcel(Parcel dest, int flags) {
+            super.writeToParcel(dest, flags);
+            dest.writeLong(currentDate);
+            dest.writeLong(minDate);
+            dest.writeLong(maxDate);
         }
     }
 }

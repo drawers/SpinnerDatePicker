@@ -1,5 +1,6 @@
 package com.tsongkha.spinnerdatepickerexample;
 
+import android.support.test.espresso.action.ViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -18,6 +19,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
+
+    public static final int SCROLL_UP = 40;
+    public static final int SCROLL_DOWN = -40;
 
     @Rule
     public ActivityTestRule<MainActivity> mainActivityActivityTestRule = new ActivityTestRule<>(MainActivity.class, true, false);
@@ -58,7 +62,9 @@ public class MainActivityTest {
         });
 
         //assert
-        onView(withId(R.id.day)).perform(NumberPickers.setNumber(10)).check(NumberPickers.isDisplayed("10"));
+        onView(withId(R.id.day)).perform(NumberPickers.scroll(SCROLL_DOWN)).check(NumberPickers.isDisplayed("2"));
+        onView(withId(R.id.day)).perform(NumberPickers.scroll(SCROLL_UP)).check(NumberPickers.isDisplayed("1"));
+        onView(withId(R.id.day)).perform(NumberPickers.scroll(SCROLL_UP)).check(NumberPickers.isDisplayed("31"));
     }
 
     @Test
@@ -72,7 +78,9 @@ public class MainActivityTest {
         });
 
         //assert
-        onView(withId(R.id.month)).perform(NumberPickers.setNumber(3)).check(NumberPickers.isDisplayed("Mar"));
+        onView(withId(R.id.month)).perform(NumberPickers.scroll(SCROLL_DOWN)).check(NumberPickers.isDisplayed("Feb"));
+        onView(withId(R.id.month)).perform(NumberPickers.scroll(SCROLL_UP)).check(NumberPickers.isDisplayed("Jan"));
+        onView(withId(R.id.month)).perform(NumberPickers.scroll(SCROLL_UP)).check(NumberPickers.isDisplayed("Dec"));
     }
 
     @Test
@@ -86,7 +94,9 @@ public class MainActivityTest {
         });
 
         //assert
-        onView(withId(R.id.year)).perform(NumberPickers.setNumber(1970)).check(NumberPickers.isDisplayed("1970"));
+        onView(withId(R.id.year)).perform(NumberPickers.scroll(SCROLL_UP)).check(NumberPickers.isDisplayed("1979"));
+        onView(withId(R.id.year)).perform(NumberPickers.scroll(SCROLL_DOWN)).check(NumberPickers.isDisplayed("1980"));
+        onView(withId(R.id.year)).perform(NumberPickers.scroll(SCROLL_DOWN)).check(NumberPickers.isDisplayed("1981"));
     }
 
     @Test
@@ -113,18 +123,32 @@ public class MainActivityTest {
     }
 
     @Test
-    public void testSetDate() throws Exception {
-        //act
-        onView(withId(R.id.set_date_button)).perform(click());
-        onView(withId(com.tsongkha.spinnerdatepicker.R.id.day))
-                .perform(NumberPickers.setNumber(15));
-        onView(withId(com.tsongkha.spinnerdatepicker.R.id.month))
-                .perform(NumberPickers.setNumber(10));
-        onView(withId(com.tsongkha.spinnerdatepicker.R.id.year))
-                .perform(NumberPickers.setNumber(1960));
-        onView(withText(android.R.string.ok)).perform(click());
+    public void testDaysInMonthDecreaseViaMonthChange() throws Exception {
+        mainActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mainActivity.showDate(1980, 0, 31, R.style.DatePickerSpinner);
+            }
+        });
 
-        //assert
-        onView(withId(R.id.date_textview)).check(matches(withText("15 10 1960")));
+        onView(withId(com.tsongkha.spinnerdatepicker.R.id.month))
+                .perform(NumberPickers.scroll(SCROLL_DOWN));
+        onView(withId(com.tsongkha.spinnerdatepicker.R.id.day))
+                .check(NumberPickers.isDisplayed("29"));
+    }
+
+    @Test
+    public void testDaysInMonthDecreaseViaYearChange() throws Exception {
+        mainActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mainActivity.showDate(1980, 1, 29, R.style.DatePickerSpinner);
+            }
+        });
+
+        onView(withId(com.tsongkha.spinnerdatepicker.R.id.year))
+                .perform(NumberPickers.scroll(SCROLL_DOWN));
+        onView(withId(com.tsongkha.spinnerdatepicker.R.id.day))
+                .check(NumberPickers.isDisplayed("1"));
     }
 }

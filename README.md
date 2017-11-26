@@ -1,3 +1,5 @@
+[![API](https://img.shields.io/badge/API-18%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=18) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SpinnerDatePicker-red.svg?style=plastic)](https://android-arsenal.com/details/1/6319) [![Release](https://jitpack.io/v/drawers/SpinnerDatePicker.svg)](https://jitpack.io/#drawers/SpinnerDatePicker)
+
 Spinner DatePicker
 -----
 
@@ -5,23 +7,23 @@ Spinner DatePicker
 
 The old "spinner" style DatePicker for newer devices.
 
-![ScreenShot](https://i.imgur.com/jhg39Tb.png)
+![ScreenShot](https://i.imgur.com/TMiivVq.png)
 
 ## Motivation
 
 The default Material Design DatePicker has poor usability for choosing a date of birth. It seems it is hard for users to find the "year" button and they will often simply swipe left or right through the months in order to find their date of birth. 
 
-![MaterialDesign](https://i.imgur.com/8lmZhbd.png)
+![MaterialDesign](https://i.imgur.com/8lmZhbd.png?1)
 
 The previous Holo DatePicker with sliding NumberPickers is much more suitable for this use case however it is no longer available for Marshmallow devices and up. 
 
-This library is heavily based on the open source Contacts App DatePicker (source code [here](https://android.googlesource.com/platform/packages/apps/ContactsCommon/)) with the addition of being able to style the NumberPickers (the dials/spinners in the DatePicker). 
+This library is heavily based on the latest [Android Open Source Project](https://source.android.com/) DatePicker (source code [here](http://androidxref.com/8.0.0_r4/xref/frameworks/base/core/java/android/widget/DatePickerSpinnerDelegate.java)) with the addition of being able to style the NumberPickers (the dials/spinners in the DatePicker).
 
 ## Adding styles
 
 The DatePicker is the simple aggregation of three NumberPickers. You can style the DatePicker easily with a NumberPicker style:
 
-    <style name="NumbePickerStyle">
+    <style name="NumberPickerStyle">
         <item name="android:textSize">22dp</item>
         <item name="android:textColorPrimary">@color/colorAccent</item>
         <item name="android:colorControlNormal" tools:targetApi="lollipop">@color/colorAccent</item>
@@ -35,9 +37,9 @@ And then:
                 .context(MainActivity.this)
                 .callback(MainActivity.this)
                 .spinnerTheme(spinnerTheme)
-                .year(year)
-                .monthOfYear(monthOfYear)
-                .dayOfMonth(dayOfMonth)
+                .defaultDate(2017, 0, 1)
+                .maxDate(2000, 0, 1)
+                .minDate(2020, 0, 1)
                 .build()
                 .show();
 
@@ -59,14 +61,19 @@ Add this to your **app level** `build.gradle`:
     
    ```gradle
    dependencies {
-       compile 'com.github.drawers:SpinnerDatePicker:0.0.8'
+       compile 'com.github.drawers:SpinnerDatePicker:1.0.0'
    }
    ```             
 
 Philosophy
 ==========
 
-The aim of this project is to produce a lightweight and robust DatePicker. Hence the library has no external dependencies and no fancy features. Espresso automated UI pesting is performed on the sample project using Firebase test lab. When more funds are available, more devices will be tested.
+The aim of this project is to produce a lightweight and robust DatePicker with an API similar to that of the standard Android DatePicker. Hence the library has no external dependencies and no fancy features. Espresso automated UI testing is performed on the sample project using Firebase test lab.
+
+Contributing
+============
+
+Please open an issue first before making a pull request. Pull requests should be accompanied by tests if possible.
 
 License
 =======

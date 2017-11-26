@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 
 import org.hamcrest.Matcher;
+import org.junit.experimental.theories.DataPoint;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -25,6 +26,7 @@ import static junit.framework.Assert.assertEquals;
 
 class NumberPickers {
 
+    @Deprecated
     public static ViewAction setNumber(final int num) {
         return new ViewAction() {
             @Override
@@ -53,6 +55,7 @@ class NumberPickers {
                 NumberPicker np = (NumberPicker) view;
                 EditText et = com.tsongkha.spinnerdatepicker.NumberPickers.findEditText(np);
                 ViewActions.typeText(value).perform(uiController, et);
+                ViewActions.closeSoftKeyboard();
             }
 
             @Override

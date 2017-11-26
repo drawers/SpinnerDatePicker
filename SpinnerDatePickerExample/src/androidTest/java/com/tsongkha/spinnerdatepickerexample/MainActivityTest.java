@@ -63,6 +63,8 @@ public class MainActivityTest {
 
         //assert
         onView(withId(R.id.day)).perform(NumberPickers.scroll(SCROLL_DOWN)).check(NumberPickers.isDisplayed("2"));
+        onView(withId(R.id.day)).perform(NumberPickers.scroll(SCROLL_UP)).check(NumberPickers.isDisplayed("1"));
+        onView(withId(R.id.day)).perform(NumberPickers.scroll(SCROLL_UP)).check(NumberPickers.isDisplayed("31"));
     }
 
     @Test
@@ -76,7 +78,9 @@ public class MainActivityTest {
         });
 
         //assert
-        onView(withId(R.id.month)).perform(NumberPickers.scroll(SCROLL_DOWN * 3)).check(NumberPickers.isDisplayed("Mar"));
+        onView(withId(R.id.month)).perform(NumberPickers.scroll(SCROLL_DOWN)).check(NumberPickers.isDisplayed("Feb"));
+        onView(withId(R.id.month)).perform(NumberPickers.scroll(SCROLL_UP)).check(NumberPickers.isDisplayed("Jan"));
+        onView(withId(R.id.month)).perform(NumberPickers.scroll(SCROLL_UP)).check(NumberPickers.isDisplayed("Dec"));
     }
 
     @Test
@@ -91,6 +95,8 @@ public class MainActivityTest {
 
         //assert
         onView(withId(R.id.year)).perform(NumberPickers.scroll(SCROLL_UP)).check(NumberPickers.isDisplayed("1979"));
+        onView(withId(R.id.year)).perform(NumberPickers.scroll(SCROLL_DOWN)).check(NumberPickers.isDisplayed("1980"));
+        onView(withId(R.id.year)).perform(NumberPickers.scroll(SCROLL_DOWN)).check(NumberPickers.isDisplayed("1981"));
     }
 
     @Test
@@ -114,22 +120,6 @@ public class MainActivityTest {
                 .check(NumberPickers.isDisplayed("Dec"));
         onView(withId(com.tsongkha.spinnerdatepicker.R.id.day))
                 .check(NumberPickers.isDisplayed("31"));
-    }
-
-    @Test
-    public void testSetDate() throws Exception {
-        //act
-        onView(withId(R.id.set_date_button)).perform(click());
-        onView(withId(com.tsongkha.spinnerdatepicker.R.id.month))
-                .perform(NumberPickers.typeInNumberPicker("Oct")); //TODO: fix so that typing in day first will work - looks like bug in AOSP
-        onView(withId(com.tsongkha.spinnerdatepicker.R.id.day))
-                .perform(NumberPickers.typeInNumberPicker("15"));
-        onView(withId(com.tsongkha.spinnerdatepicker.R.id.year))
-                .perform(NumberPickers.typeInNumberPicker("1960"));
-        onView(withText(android.R.string.ok)).perform(click());
-
-        //assert
-        onView(withId(R.id.date_textview)).check(matches(withText("15 10 1960")));
     }
 
     @Test

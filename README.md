@@ -1,4 +1,4 @@
-[![API](https://img.shields.io/badge/API-18%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=18) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SpinnerDatePicker-red.svg?style=plastic)](https://android-arsenal.com/details/1/6319) [![Release](https://jitpack.io/v/drawers/SpinnerDatePicker.svg)](https://jitpack.io/#drawers/SpinnerDatePicker)
+[![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=18) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SpinnerDatePicker-red.svg?style=plastic)](https://android-arsenal.com/details/1/6319) [![Release](https://jitpack.io/v/drawers/SpinnerDatePicker.svg)](https://jitpack.io/#drawers/SpinnerDatePicker)
 
 Spinner DatePicker
 -----

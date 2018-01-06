@@ -17,7 +17,7 @@ The default Material Design DatePicker has poor usability for choosing a date of
 
 The previous Holo DatePicker with sliding NumberPickers is much more suitable for this use case however it is no longer available for Marshmallow devices and up. 
 
-This library is heavily based on the latest [Android Open Source Project](https://source.android.com/) DatePicker (source code [here](http://androidxref.com/8.0.0_r4/xref/frameworks/base/core/java/android/widget/DatePickerSpinnerDelegate.java)) with the addition of being able to style the NumberPickers (the dials/spinners in the DatePicker).
+This library is heavily based on the latest [Android Open Source Project](https://source.android.com/) DatePicker (source code [here](http://androidxref.com/8.0.0_r4/xref/frameworks/base/core/java/android/widget/DatePickerSpinnerDelegate.java)) with the addition of being able to style the NumberPickers (the dials/spinners in the DatePicker). 
 
 ## Adding styles
 
@@ -61,7 +61,7 @@ Add this to your **app level** `build.gradle`:
     
    ```gradle
    dependencies {
-       compile 'com.github.drawers:SpinnerDatePicker:1.0.2'
+       compile 'com.github.drawers:SpinnerDatePicker:1.0.3'
    }
    ```             
 

@@ -129,6 +129,7 @@ public class DatePicker extends FrameLayout {
                 setDate(mTempDate.get(Calendar.YEAR), mTempDate.get(Calendar.MONTH),
                         mTempDate.get(Calendar.DAY_OF_MONTH));
                 updateSpinners();
+                notifyDateChanged();
             }
         };
 

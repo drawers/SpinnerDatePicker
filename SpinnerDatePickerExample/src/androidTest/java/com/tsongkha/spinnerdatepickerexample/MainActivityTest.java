@@ -1,6 +1,5 @@
 package com.tsongkha.spinnerdatepickerexample;
 
-import android.support.test.espresso.action.ViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -13,8 +12,10 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.containsString;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -24,7 +25,8 @@ public class MainActivityTest {
     public static final int SCROLL_DOWN = -40;
 
     @Rule
-    public ActivityTestRule<MainActivity> mainActivityActivityTestRule = new ActivityTestRule<>(MainActivity.class, true, false);
+    public ActivityTestRule<MainActivity> mainActivityActivityTestRule = new ActivityTestRule<>(
+            MainActivity.class, true, false);
 
     MainActivity mainActivity;
 
@@ -49,6 +51,8 @@ public class MainActivityTest {
                 .check(NumberPickers.isDisplayed("Jan"));
         onView(withId(com.tsongkha.spinnerdatepicker.R.id.day))
                 .check(NumberPickers.isDisplayed("1"));
+        onView(withClassName(containsString("DialogTitle"))).check(
+                matches(withText("January 1, 1980")));
     }
 
     @Test
@@ -62,9 +66,14 @@ public class MainActivityTest {
         });
 
         //assert
-        onView(withId(R.id.day)).perform(NumberPickers.scroll(SCROLL_DOWN)).check(NumberPickers.isDisplayed("2"));
-        onView(withId(R.id.day)).perform(NumberPickers.scroll(SCROLL_UP)).check(NumberPickers.isDisplayed("1"));
-        onView(withId(R.id.day)).perform(NumberPickers.scroll(SCROLL_UP)).check(NumberPickers.isDisplayed("31"));
+        onView(withId(R.id.day)).perform(NumberPickers.scroll(SCROLL_DOWN)).check(
+                NumberPickers.isDisplayed("2"));
+        onView(withId(R.id.day)).perform(NumberPickers.scroll(SCROLL_UP)).check(
+                NumberPickers.isDisplayed("1"));
+        onView(withId(R.id.day)).perform(NumberPickers.scroll(SCROLL_UP)).check(
+                NumberPickers.isDisplayed("31"));
+        onView(withClassName(containsString("DialogTitle"))).check(
+                matches(withText("December 31, 1979")));
     }
 
     @Test
@@ -78,9 +87,14 @@ public class MainActivityTest {
         });
 
         //assert
-        onView(withId(R.id.month)).perform(NumberPickers.scroll(SCROLL_DOWN)).check(NumberPickers.isDisplayed("Feb"));
-        onView(withId(R.id.month)).perform(NumberPickers.scroll(SCROLL_UP)).check(NumberPickers.isDisplayed("Jan"));
-        onView(withId(R.id.month)).perform(NumberPickers.scroll(SCROLL_UP)).check(NumberPickers.isDisplayed("Dec"));
+        onView(withId(R.id.month)).perform(NumberPickers.scroll(SCROLL_DOWN)).check(
+                NumberPickers.isDisplayed("Feb"));
+        onView(withId(R.id.month)).perform(NumberPickers.scroll(SCROLL_UP)).check(
+                NumberPickers.isDisplayed("Jan"));
+        onView(withId(R.id.month)).perform(NumberPickers.scroll(SCROLL_UP)).check(
+                NumberPickers.isDisplayed("Dec"));
+        onView(withClassName(containsString("DialogTitle"))).check(
+                matches(withText("December 1, 1979")));
     }
 
     @Test
@@ -94,9 +108,14 @@ public class MainActivityTest {
         });
 
         //assert
-        onView(withId(R.id.year)).perform(NumberPickers.scroll(SCROLL_UP)).check(NumberPickers.isDisplayed("1979"));
-        onView(withId(R.id.year)).perform(NumberPickers.scroll(SCROLL_DOWN)).check(NumberPickers.isDisplayed("1980"));
-        onView(withId(R.id.year)).perform(NumberPickers.scroll(SCROLL_DOWN)).check(NumberPickers.isDisplayed("1981"));
+        onView(withId(R.id.year)).perform(NumberPickers.scroll(SCROLL_UP)).check(
+                NumberPickers.isDisplayed("1979"));
+        onView(withId(R.id.year)).perform(NumberPickers.scroll(SCROLL_DOWN)).check(
+                NumberPickers.isDisplayed("1980"));
+        onView(withId(R.id.year)).perform(NumberPickers.scroll(SCROLL_DOWN)).check(
+                NumberPickers.isDisplayed("1981"));
+        onView(withClassName(containsString("DialogTitle"))).check(
+                matches(withText("January 1, 1981")));
     }
 
     @Test
@@ -120,6 +139,8 @@ public class MainActivityTest {
                 .check(NumberPickers.isDisplayed("Dec"));
         onView(withId(com.tsongkha.spinnerdatepicker.R.id.day))
                 .check(NumberPickers.isDisplayed("31"));
+        onView(withClassName(containsString("DialogTitle"))).check(
+                matches(withText("December 31, 1970")));
     }
 
     @Test
@@ -135,6 +156,8 @@ public class MainActivityTest {
                 .perform(NumberPickers.scroll(SCROLL_DOWN));
         onView(withId(com.tsongkha.spinnerdatepicker.R.id.day))
                 .check(NumberPickers.isDisplayed("29"));
+        onView(withClassName(containsString("DialogTitle"))).check(
+                matches(withText("February 29, 1980")));
     }
 
     @Test
@@ -150,5 +173,7 @@ public class MainActivityTest {
                 .perform(NumberPickers.scroll(SCROLL_DOWN));
         onView(withId(com.tsongkha.spinnerdatepicker.R.id.day))
                 .check(NumberPickers.isDisplayed("1"));
+        onView(withClassName(containsString("DialogTitle"))).check(
+                matches(withText("March 1, 1981")));
     }
 }

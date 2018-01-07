@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.tsongkha.spinnerdatepickerexample"
-        minSdkVersion 18
+        minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
         versionName "1.0.1"
@@ -21,6 +21,7 @@ android {
 buildscript {
     repositories {
         mavenCentral()
+        google()
     }
     dependencies {
         classpath 'com.google.gms:google-services:3.1.0'

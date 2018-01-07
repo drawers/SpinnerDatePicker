@@ -1,4 +1,4 @@
-[![API](https://img.shields.io/badge/API-18%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=18) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SpinnerDatePicker-red.svg?style=plastic)](https://android-arsenal.com/details/1/6319) [![Release](https://jitpack.io/v/drawers/SpinnerDatePicker.svg)](https://jitpack.io/#drawers/SpinnerDatePicker)
+[![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=18) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SpinnerDatePicker-red.svg?style=plastic)](https://android-arsenal.com/details/1/6319) [![Release](https://jitpack.io/v/drawers/SpinnerDatePicker.svg)](https://jitpack.io/#drawers/SpinnerDatePicker)
 
 Spinner DatePicker
 -----
@@ -44,6 +44,8 @@ And then:
                 .show();
 
 The example project should make it clear - get it by cloning the repo.                    
+
+Note that full support is only for API >= 18. API < 18 you'll get the DatePicker but there is no easy way to style it correctly.                     
                     
 ## Usage in a project
 
@@ -61,7 +63,7 @@ Add this to your **app level** `build.gradle`:
     
    ```gradle
    dependencies {
-       compile 'com.github.drawers:SpinnerDatePicker:1.0.3'
+       compile 'com.github.drawers:SpinnerDatePicker:1.0.4'
    }
    ```             
 

@@ -92,7 +92,8 @@ public class DatePicker extends FrameLayout {
         // initialization based on locale
         setCurrentLocale(Locale.getDefault());
 
-        LayoutInflater inflater = (LayoutInflater) new ContextThemeWrapper(mContext, numberPickerStyle).getSystemService(
+        LayoutInflater inflater = (LayoutInflater) new ContextThemeWrapper(mContext,
+                                                                           numberPickerStyle).getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.date_picker_container, this, true);
 
@@ -134,7 +135,8 @@ public class DatePicker extends FrameLayout {
         };
 
         // day
-        mDaySpinner = (NumberPicker) inflater.inflate(R.layout.number_picker_day_month, mPickerContainer, false);
+        mDaySpinner = (NumberPicker) inflater.inflate(R.layout.number_picker_day_month,
+                                                      mPickerContainer, false);
         mDaySpinner.setId(R.id.day);
         mDaySpinner.setFormatter(new TwoDigitFormatter());
         mDaySpinner.setOnLongPressUpdateInterval(100);
@@ -142,7 +144,8 @@ public class DatePicker extends FrameLayout {
         mDaySpinnerInput = NumberPickers.findEditText(mDaySpinner);
 
         // month
-        mMonthSpinner = (NumberPicker) inflater.inflate(R.layout.number_picker_day_month, mPickerContainer, false);
+        mMonthSpinner = (NumberPicker) inflater.inflate(R.layout.number_picker_day_month,
+                                                        mPickerContainer, false);
         mMonthSpinner.setId(R.id.month);
         mMonthSpinner.setMinValue(0);
         mMonthSpinner.setMaxValue(mNumberOfMonths - 1);
@@ -152,7 +155,8 @@ public class DatePicker extends FrameLayout {
         mMonthSpinnerInput = NumberPickers.findEditText(mMonthSpinner);
 
         // year
-        mYearSpinner = (NumberPicker) inflater.inflate(R.layout.number_picker_year, mPickerContainer, false);
+        mYearSpinner = (NumberPicker) inflater.inflate(R.layout.number_picker_year,
+                                                       mPickerContainer, false);
         mYearSpinner.setId(R.id.year);
         mYearSpinner.setOnLongPressUpdateInterval(100);
         mYearSpinner.setOnValueChangedListener(onChangeListener);
@@ -173,7 +177,7 @@ public class DatePicker extends FrameLayout {
     }
 
     void init(int year, int monthOfYear, int dayOfMonth,
-                     OnDateChangedListener onDateChangedListener) {
+              OnDateChangedListener onDateChangedListener) {
         setDate(year, monthOfYear, dayOfMonth);
         updateSpinners();
         mOnDateChangedListener = onDateChangedListener;
@@ -311,7 +315,12 @@ public class DatePicker extends FrameLayout {
         mPickerContainer.removeAllViews();
         // We use numeric spinners for year and day, but textual months. Ask icu4c what
         // order the user's locale uses for that combination. http://b/7207103.
-        String pattern = DateFormat.getBestDateTimePattern(Locale.getDefault(), "yyyyMMMdd");
+        String pattern = null;
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            pattern = getOrderJellyBeanMr2();
+        } else {
+            pattern = DateFormat.getBestDateTimePattern(Locale.getDefault(), "yyyyMMMdd");
+        }
         char[] order = ICU.getDateFormatOrder(pattern);
         final int spinnerCount = order.length;
         for (int i = 0; i < spinnerCount; i++) {
@@ -332,6 +341,26 @@ public class DatePicker extends FrameLayout {
                     throw new IllegalArgumentException(Arrays.toString(order));
             }
         }
+    }
+
+
+    //see http://androidxref.com/4.1.1/xref/packages/apps/Contacts/src/com/android/contacts/datepicker/DatePicker.java
+    private String getOrderJellyBeanMr2() {
+        java.text.DateFormat format;
+        String order;
+        if (mShortMonths[0].startsWith("1")) {
+            format = DateFormat.getDateFormat(getContext());
+        } else {
+            format = DateFormat.getMediumDateFormat(getContext());
+        }
+
+        if (format instanceof SimpleDateFormat) {
+            order = ((SimpleDateFormat) format).toPattern();
+        } else {
+            // Shouldn't happen, but just in case.
+            order = new String(DateFormat.getDateFormatOrder(getContext()));
+        }
+        return order;
     }
 
     private boolean isNewDate(int year, int month, int dayOfMonth) {
@@ -380,7 +409,8 @@ public class DatePicker extends FrameLayout {
         // make sure the month names are a zero based array
         // with the months in the month spinner
         String[] displayedValues = Arrays.copyOfRange(mShortMonths,
-                mMonthSpinner.getMinValue(), mMonthSpinner.getMaxValue() + 1);
+                                                      mMonthSpinner.getMinValue(),
+                                                      mMonthSpinner.getMaxValue() + 1);
         mMonthSpinner.setDisplayedValues(displayedValues);
 
         // year spinner range does not change based on the current date
@@ -406,7 +436,7 @@ public class DatePicker extends FrameLayout {
         sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED);
         if (mOnDateChangedListener != null) {
             mOnDateChangedListener.onDateChanged(this, getYear(), getMonth(),
-                    getDayOfMonth());
+                                                 getDayOfMonth());
         }
     }
 
@@ -434,7 +464,8 @@ public class DatePicker extends FrameLayout {
         // changed the value via the IME and there is a next input the IME will
         // be shown, otherwise the user chose another means of changing the
         // value and having the IME up makes no sense.
-        InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(
+                Context.INPUT_METHOD_SERVICE);
         if (inputMethodManager != null) {
             if (inputMethodManager.isActive(mYearSpinnerInput)) {
                 mYearSpinnerInput.clearFocus();
@@ -449,13 +480,15 @@ public class DatePicker extends FrameLayout {
         }
     }
 
-    @Override protected Parcelable onSaveInstanceState() {
+    @Override
+    protected Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
 
         return new SavedState(superState, mCurrentDate, mMinDate, mMaxDate);
     }
 
-    @Override protected void onRestoreInstanceState(Parcelable state) {
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
         SavedState ss = (SavedState) state;
         super.onRestoreInstanceState(ss.getSuperState());
         mCurrentDate = Calendar.getInstance();
@@ -471,11 +504,13 @@ public class DatePicker extends FrameLayout {
 
         @SuppressWarnings("unused") public static final Parcelable.Creator<SavedState> CREATOR = new Creator<SavedState>() {
 
-            @Override public SavedState createFromParcel(Parcel in) {
+            @Override
+            public SavedState createFromParcel(Parcel in) {
                 return new SavedState(in);
             }
 
-            @Override public SavedState[] newArray(int size) {
+            @Override
+            public SavedState[] newArray(int size) {
                 return new SavedState[size];
             }
         };
@@ -486,7 +521,10 @@ public class DatePicker extends FrameLayout {
         /**
          * Constructor called from {@link DatePicker#onSaveInstanceState()}
          */
-        SavedState(Parcelable superState, Calendar currentDate, Calendar minDate, Calendar maxDate) {
+        SavedState(Parcelable superState,
+                   Calendar currentDate,
+                   Calendar minDate,
+                   Calendar maxDate) {
             super(superState);
             this.currentDate = currentDate.getTimeInMillis();
             this.minDate = minDate.getTimeInMillis();
@@ -503,7 +541,8 @@ public class DatePicker extends FrameLayout {
             this.maxDate = in.readLong();
         }
 
-        @Override public void writeToParcel(Parcel dest, int flags) {
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
             dest.writeLong(currentDate);
             dest.writeLong(minDate);

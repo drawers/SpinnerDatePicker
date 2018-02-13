@@ -113,6 +113,6 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, day);
         updateTitle(c);
-        throw new UnsupportedOperationException("not implemented yet");
+        mDatePicker.init(year, month, day, this);
     }
 }

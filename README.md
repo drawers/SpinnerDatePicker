@@ -63,7 +63,7 @@ Add this to your **app level** `build.gradle`:
     
    ```gradle
    dependencies {
-       compile 'com.github.drawers:SpinnerDatePicker:1.0.4'
+       compile 'com.github.drawers:SpinnerDatePicker:1.0.5'
    }
    ```             
 
@@ -80,7 +80,7 @@ Please open an issue first before making a pull request. Pull requests should be
 License
 =======
 
-Copyright 2017 David Rawson
+Copyright 2017 AOSP, David Rawson
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

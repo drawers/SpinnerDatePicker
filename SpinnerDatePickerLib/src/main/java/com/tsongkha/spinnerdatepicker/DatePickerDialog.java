@@ -25,6 +25,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
     private final DatePicker mDatePicker;
     private final OnDateSetListener mCallBack;
     private final DateFormat mTitleDateFormat;
+    private boolean mIsDayEnabled;
 
     /**
      * The callback used to indicate the user is done filling in the date.
@@ -46,11 +47,13 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
                      OnDateSetListener callBack,
                      Calendar defaultDate,
                      Calendar minDate,
-                     Calendar maxDate) {
+                     Calendar maxDate,
+                     boolean isDayEnabled) {
         super(context, theme);
 
         mCallBack = callBack;
         mTitleDateFormat = DateFormat.getDateInstance(DateFormat.LONG);
+        mIsDayEnabled = isDayEnabled;
 
         updateTitle(defaultDate);
 
@@ -66,7 +69,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         mDatePicker = new DatePicker((ViewGroup) view, spinnerTheme);
         mDatePicker.setMinDate(minDate.getTimeInMillis());
         mDatePicker.setMaxDate(maxDate.getTimeInMillis());
-        mDatePicker.init(defaultDate.get(Calendar.YEAR), defaultDate.get(Calendar.MONTH), defaultDate.get(Calendar.DAY_OF_MONTH), this);
+        mDatePicker.init(defaultDate.get(Calendar.YEAR), defaultDate.get(Calendar.MONTH), defaultDate.get(Calendar.DAY_OF_MONTH), mIsDayEnabled, this);
 
     }
 
@@ -113,6 +116,6 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, day);
         updateTitle(c);
-        mDatePicker.init(year, month, day, this);
+        mDatePicker.init(year, month, day, mIsDayEnabled, this);
     }
 }

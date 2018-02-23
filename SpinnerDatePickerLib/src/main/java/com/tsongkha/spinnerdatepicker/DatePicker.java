@@ -83,7 +83,9 @@ public class DatePicker extends FrameLayout {
 
     private Calendar mCurrentDate;
 
+
     private boolean mIsEnabled = DEFAULT_ENABLED_STATE;
+    private boolean mIsDayEnabled = true;
 
     DatePicker(ViewGroup root, int numberPickerStyle) {
         super(root.getContext());
@@ -143,6 +145,7 @@ public class DatePicker extends FrameLayout {
         mDaySpinner.setOnValueChangedListener(onChangeListener);
         mDaySpinnerInput = NumberPickers.findEditText(mDaySpinner);
 
+
         // month
         mMonthSpinner = (NumberPicker) inflater.inflate(R.layout.number_picker_day_month,
                                                         mPickerContainer, false);
@@ -177,7 +180,8 @@ public class DatePicker extends FrameLayout {
     }
 
     void init(int year, int monthOfYear, int dayOfMonth,
-              OnDateChangedListener onDateChangedListener) {
+              boolean isDayEnabled, OnDateChangedListener onDateChangedListener) {
+        mIsDayEnabled = isDayEnabled;
         setDate(year, monthOfYear, dayOfMonth);
         updateSpinners();
         mOnDateChangedListener = onDateChangedListener;
@@ -380,6 +384,7 @@ public class DatePicker extends FrameLayout {
 
     private void updateSpinners() {
         // set the spinner ranges respecting the min and max dates
+        mDaySpinner.setVisibility(mIsDayEnabled ? View.VISIBLE : View.GONE);
         if (mCurrentDate.equals(mMinDate)) {
             mDaySpinner.setMinValue(mCurrentDate.get(Calendar.DAY_OF_MONTH));
             mDaySpinner.setMaxValue(mCurrentDate.getActualMaximum(Calendar.DAY_OF_MONTH));

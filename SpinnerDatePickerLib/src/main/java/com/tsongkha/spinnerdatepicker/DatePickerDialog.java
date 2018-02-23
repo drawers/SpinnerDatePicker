@@ -25,7 +25,9 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
     private final DatePicker mDatePicker;
     private final OnDateSetListener mCallBack;
     private final DateFormat mTitleDateFormat;
-    private boolean mIsDayEnabled;
+
+    private boolean mIsDayEnabled = true;
+    private boolean mUpdateTitleEnabled = true;
 
     /**
      * The callback used to indicate the user is done filling in the date.
@@ -48,12 +50,14 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
                      Calendar defaultDate,
                      Calendar minDate,
                      Calendar maxDate,
-                     boolean isDayEnabled) {
+                     boolean isDayEnabled,
+                     boolean updateTitleEnabled) {
         super(context, theme);
 
         mCallBack = callBack;
         mTitleDateFormat = DateFormat.getDateInstance(DateFormat.LONG);
         mIsDayEnabled = isDayEnabled;
+        mUpdateTitleEnabled = updateTitleEnabled;
 
         updateTitle(defaultDate);
 
@@ -69,7 +73,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         mDatePicker = new DatePicker((ViewGroup) view, spinnerTheme);
         mDatePicker.setMinDate(minDate.getTimeInMillis());
         mDatePicker.setMaxDate(maxDate.getTimeInMillis());
-        mDatePicker.init(defaultDate.get(Calendar.YEAR), defaultDate.get(Calendar.MONTH), defaultDate.get(Calendar.DAY_OF_MONTH), mIsDayEnabled, this);
+        mDatePicker.init(defaultDate.get(Calendar.YEAR), defaultDate.get(Calendar.MONTH), defaultDate.get(Calendar.DAY_OF_MONTH), isDayEnabled, this);
 
     }
 
@@ -92,8 +96,12 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
     }
 
     private void updateTitle(Calendar updatedDate) {
-        final DateFormat dateFormat = mTitleDateFormat;
-        setTitle(dateFormat.format(updatedDate.getTime()));
+        if(mUpdateTitleEnabled) {
+            final DateFormat dateFormat = mTitleDateFormat;
+            setTitle(dateFormat.format(updatedDate.getTime()));
+        } else {
+            setTitle(" ");
+        }
     }
 
     @Override

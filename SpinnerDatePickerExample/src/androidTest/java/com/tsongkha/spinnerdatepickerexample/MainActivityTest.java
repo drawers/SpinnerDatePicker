@@ -1,7 +1,10 @@
 package com.tsongkha.spinnerdatepickerexample;
 
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+
+import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -13,6 +16,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
+import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.containsString;
@@ -74,6 +78,27 @@ public class MainActivityTest {
                 NumberPickers.isDisplayed("31"));
         onView(withClassName(containsString("DialogTitle"))).check(
                 matches(withText("December 31, 1979")));
+    }
+
+    @Test
+    public void testDaySpinnerNotShown() throws Exception {
+        //act
+        mainActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                new SpinnerDatePickerDialogBuilder()
+                        .context(mainActivity)
+                        .showDaySpinner(false)
+                        .spinnerTheme(R.style.DatePickerSpinner)
+                        .build()
+                        .show();
+            }
+        });
+
+        //assert
+        onView(withId(R.id.day)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+        onView(withId(R.id.month)).perform(NumberPickers.scroll(SCROLL_UP)).check(
+                NumberPickers.isDisplayed("Dec"));
     }
 
     @Test
@@ -175,5 +200,25 @@ public class MainActivityTest {
                 .check(NumberPickers.isDisplayed("1"));
         onView(withClassName(containsString("DialogTitle"))).check(
                 matches(withText("March 1, 1981")));
+    }
+
+    @Test
+    public void testTitleNotShown() throws Exception {
+        //act
+        mainActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                new SpinnerDatePickerDialogBuilder()
+                        .context(mainActivity)
+                        .showTitle(false)
+                        .spinnerTheme(R.style.DatePickerSpinner)
+                        .build()
+                        .show();
+            }
+        });
+
+        //assert
+        onView(withClassName(containsString("DialogTitle"))).check(
+                matches(withText(" ")));
     }
 }

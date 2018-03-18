@@ -37,6 +37,8 @@ And then:
                 .context(MainActivity.this)
                 .callback(MainActivity.this)
                 .spinnerTheme(spinnerTheme)
+                .showTitle(true)
+                .showDay(true)
                 .defaultDate(2017, 0, 1)
                 .maxDate(2000, 0, 1)
                 .minDate(2020, 0, 1)

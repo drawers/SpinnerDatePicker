@@ -21,13 +21,14 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
     private static final String YEAR = "year";
     private static final String MONTH = "month";
     private static final String DAY = "day";
+    private static final String TITLE_SHOWN = "title_enabled";
 
     private final DatePicker mDatePicker;
     private final OnDateSetListener mCallBack;
     private final DateFormat mTitleDateFormat;
 
-    private boolean mIsDayEnabled = true;
-    private boolean mUpdateTitleEnabled = true;
+    private boolean mIsDayShown = true;
+    private boolean mIsTitleShown = true;
 
     /**
      * The callback used to indicate the user is done filling in the date.
@@ -50,14 +51,14 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
                      Calendar defaultDate,
                      Calendar minDate,
                      Calendar maxDate,
-                     boolean isDayEnabled,
-                     boolean updateTitleEnabled) {
+                     boolean isDayShown,
+                     boolean isTitleShown) {
         super(context, theme);
 
         mCallBack = callBack;
         mTitleDateFormat = DateFormat.getDateInstance(DateFormat.LONG);
-        mIsDayEnabled = isDayEnabled;
-        mUpdateTitleEnabled = updateTitleEnabled;
+        mIsDayShown = isDayShown;
+        mIsTitleShown = isTitleShown;
 
         updateTitle(defaultDate);
 
@@ -73,7 +74,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         mDatePicker = new DatePicker((ViewGroup) view, spinnerTheme);
         mDatePicker.setMinDate(minDate.getTimeInMillis());
         mDatePicker.setMaxDate(maxDate.getTimeInMillis());
-        mDatePicker.init(defaultDate.get(Calendar.YEAR), defaultDate.get(Calendar.MONTH), defaultDate.get(Calendar.DAY_OF_MONTH), isDayEnabled, this);
+        mDatePicker.init(defaultDate.get(Calendar.YEAR), defaultDate.get(Calendar.MONTH), defaultDate.get(Calendar.DAY_OF_MONTH), isDayShown, this);
 
     }
 
@@ -96,7 +97,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
     }
 
     private void updateTitle(Calendar updatedDate) {
-        if(mUpdateTitleEnabled) {
+        if(mIsTitleShown) {
             final DateFormat dateFormat = mTitleDateFormat;
             setTitle(dateFormat.format(updatedDate.getTime()));
         } else {
@@ -110,6 +111,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         state.putInt(YEAR, mDatePicker.getYear());
         state.putInt(MONTH, mDatePicker.getMonth());
         state.putInt(DAY, mDatePicker.getDayOfMonth());
+        state.putBoolean(TITLE_SHOWN, mIsTitleShown);
         return state;
     }
 
@@ -119,11 +121,12 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         int year = savedInstanceState.getInt(YEAR);
         int month = savedInstanceState.getInt(MONTH);
         int day = savedInstanceState.getInt(DAY);
+        mIsTitleShown = savedInstanceState.getBoolean(TITLE_SHOWN);
         Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, day);
         updateTitle(c);
-        mDatePicker.init(year, month, day, mIsDayEnabled, this);
+        mDatePicker.init(year, month, day, mIsDayShown, this);
     }
 }

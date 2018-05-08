@@ -40,8 +40,8 @@ And then:
                 .showTitle(true)
                 .showDay(true)
                 .defaultDate(2017, 0, 1)
-                .maxDate(2000, 0, 1)
-                .minDate(2020, 0, 1)
+                .maxDate(2020, 0, 1)
+                .minDate(2000, 0, 1)
                 .build()
                 .show();
 

@@ -21,7 +21,7 @@ This library is heavily based on the latest [Android Open Source Project](https:
 
 ## Adding styles
 
-The DatePicker is the simple aggregation of three NumberPickers. You can style the DatePicker easily with a NumberPicker style:
+The DatePicker is the simple aggregation of three NumberPickers. You can style the DatePicker easily with a NumberPicker style (in styles.xml in the values folder):
 
     <style name="NumberPickerStyle">
         <item name="android:textSize">22dp</item>
@@ -36,9 +36,9 @@ And then:
         new SpinnerDatePickerDialogBuilder()
                 .context(MainActivity.this)
                 .callback(MainActivity.this)
-                .spinnerTheme(spinnerTheme)
+                .spinnerTheme(R.style.NumberPickerStyle)
                 .showTitle(true)
-                .showDay(true)
+                .showDaySpinner(true)
                 .defaultDate(2017, 0, 1)
                 .maxDate(2020, 0, 1)
                 .minDate(2000, 0, 1)

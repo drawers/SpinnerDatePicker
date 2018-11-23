@@ -26,6 +26,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
     private final DatePicker mDatePicker;
     private final OnDateSetListener mCallBack;
     private final DateFormat mTitleDateFormat;
+    private String mTitleCaption = "";
 
     private boolean mIsDayShown = true;
     private boolean mIsTitleShown = true;
@@ -52,13 +53,15 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
                      Calendar minDate,
                      Calendar maxDate,
                      boolean isDayShown,
-                     boolean isTitleShown) {
+                     boolean isTitleShown,
+                     String titleCaption) {
         super(context, theme);
 
         mCallBack = callBack;
         mTitleDateFormat = DateFormat.getDateInstance(DateFormat.LONG);
         mIsDayShown = isDayShown;
         mIsTitleShown = isTitleShown;
+        mTitleCaption = titleCaption;
 
         updateTitle(defaultDate);
 
@@ -98,8 +101,12 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
 
     private void updateTitle(Calendar updatedDate) {
         if(mIsTitleShown) {
-            final DateFormat dateFormat = mTitleDateFormat;
-            setTitle(dateFormat.format(updatedDate.getTime()));
+            if (!mTitleCaption.isEmpty()) {
+                setTitle(mTitleCaption);
+            } else {
+                final DateFormat dateFormat = mTitleDateFormat;
+                setTitle(dateFormat.format(updatedDate.getTime()));
+            }
         } else {
             setTitle(" ");
         }

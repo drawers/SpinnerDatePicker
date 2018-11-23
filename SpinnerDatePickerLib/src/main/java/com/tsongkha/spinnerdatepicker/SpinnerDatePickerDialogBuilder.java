@@ -16,6 +16,7 @@ public class SpinnerDatePickerDialogBuilder {
     private Calendar defaultDate = new GregorianCalendar(1980, 0, 1);
     private Calendar minDate = new GregorianCalendar(1900, 0, 1);
     private Calendar maxDate = new GregorianCalendar(2100, 0, 1);
+    private String mTitleCaption = "";
 
 
     public SpinnerDatePickerDialogBuilder context(Context context) {
@@ -63,10 +64,15 @@ public class SpinnerDatePickerDialogBuilder {
         return this;
     }
 
+    public SpinnerDatePickerDialogBuilder setTitleCaption(String titleCaption) {
+        this.mTitleCaption = titleCaption;
+        return this;
+    }
+
     public DatePickerDialog build() {
         if (context == null) throw new IllegalArgumentException("Context must not be null");
         if (maxDate.getTime().getTime() <= minDate.getTime().getTime()) throw new IllegalArgumentException("Max date is not after Min date");
 
-        return new DatePickerDialog(context, theme, spinnerTheme, callBack, defaultDate, minDate, maxDate, isDayShown, isTitleShown);
+        return new DatePickerDialog(context, theme, spinnerTheme, callBack, defaultDate, minDate, maxDate, isDayShown, isTitleShown, mTitleCaption);
     }
 }

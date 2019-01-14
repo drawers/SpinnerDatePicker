@@ -11,8 +11,8 @@ public class SpinnerDatePickerDialogBuilder {
     private DatePickerDialog.OnDateSetListener callBack;
     private boolean isDayShown = true;
     private boolean isTitleShown = true;
-    private int theme = -1;                 //default theme
-    private int spinnerTheme = -1;          //default theme
+    private int theme = 0;                 //default theme
+    private int spinnerTheme = 0;          //default theme
     private Calendar defaultDate = new GregorianCalendar(1980, 0, 1);
     private Calendar minDate = new GregorianCalendar(1900, 0, 1);
     private Calendar maxDate = new GregorianCalendar(2100, 0, 1);

@@ -1,23 +1,20 @@
 package com.tsongkha.spinnerdatepickerexample;
 
-import android.support.test.espresso.NoMatchingViewException;
-import android.support.test.espresso.UiController;
-import android.support.test.espresso.ViewAction;
-import android.support.test.espresso.ViewAssertion;
-import android.support.test.espresso.action.ViewActions;
-import android.support.test.espresso.matcher.ViewMatchers;
+import androidx.test.espresso.NoMatchingViewException;
+import androidx.test.espresso.UiController;
+import androidx.test.espresso.ViewAction;
+import androidx.test.espresso.ViewAssertion;
+import androidx.test.espresso.action.ViewActions;
+import androidx.test.espresso.matcher.ViewMatchers;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 
 import org.hamcrest.Matcher;
-import org.junit.experimental.theories.DataPoint;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
-import static android.support.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.onView;
 import static junit.framework.Assert.assertEquals;
 
 /**

@@ -13,7 +13,7 @@ android {
         versionCode 106
         versionName "1.0.6"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {

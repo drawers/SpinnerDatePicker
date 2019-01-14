@@ -19,9 +19,8 @@ android {
 }
 
 dependencies {
-    androidTestCompile('androidx.test.espresso:espresso-core:3.1.0', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+    androidTestCompile 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestCompile 'androidx.test:rules:1.1.1'
 
     compile project(':SpinnerDatePickerLib')
     compile 'androidx.appcompat:appcompat:1.0.0'

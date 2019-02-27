@@ -11,6 +11,7 @@ public class SpinnerDatePickerDialogBuilder {
     private DatePickerDialog.OnDateSetListener callBack;
     private boolean isDayShown = true;
     private boolean isTitleShown = true;
+    private boolean isTitleHold = false;
     private int theme = 0;                 //default theme
     private int spinnerTheme = 0;          //default theme
     private Calendar defaultDate = new GregorianCalendar(1980, 0, 1);
@@ -63,10 +64,25 @@ public class SpinnerDatePickerDialogBuilder {
         return this;
     }
 
+    public SpinnerDatePickerDialogBuilder holdTitle(boolean holdTitle) {
+        this.isTitleHold = holdTitle;
+        return this;
+    }
+
     public DatePickerDialog build() {
         if (context == null) throw new IllegalArgumentException("Context must not be null");
-        if (maxDate.getTime().getTime() <= minDate.getTime().getTime()) throw new IllegalArgumentException("Max date is not after Min date");
+        if (maxDate.getTime().getTime() <= minDate.getTime().getTime())
+            throw new IllegalArgumentException("Max date is not after Min date");
 
-        return new DatePickerDialog(context, theme, spinnerTheme, callBack, defaultDate, minDate, maxDate, isDayShown, isTitleShown);
+        return new DatePickerDialog(context,
+                theme,
+                spinnerTheme,
+                callBack,
+                defaultDate,
+                minDate,
+                maxDate,
+                isDayShown,
+                isTitleShown,
+                isTitleHold);
     }
 }

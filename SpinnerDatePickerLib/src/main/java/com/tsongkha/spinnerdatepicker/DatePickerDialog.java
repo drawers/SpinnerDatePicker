@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.appcompat.app.AlertDialog;
+
 import java.text.DateFormat;
 import java.util.Calendar;
+
+import androidx.appcompat.app.AlertDialog;
 
 /**
  * A fork of the Android Open Source Project DatePickerDialog class
@@ -28,6 +30,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
 
     private boolean mIsDayShown = true;
     private boolean mIsTitleShown = true;
+    private boolean mIsTitleHold = false;
 
     /**
      * The callback used to indicate the user is done filling in the date.
@@ -51,13 +54,15 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
                      Calendar minDate,
                      Calendar maxDate,
                      boolean isDayShown,
-                     boolean isTitleShown) {
+                     boolean isTitleShown,
+                     boolean isTitleHold) {
         super(context, theme);
 
         mCallBack = callBack;
         mTitleDateFormat = DateFormat.getDateInstance(DateFormat.LONG);
         mIsDayShown = isDayShown;
         mIsTitleShown = isTitleShown;
+        mIsTitleHold = isTitleHold;
 
         updateTitle(defaultDate);
 
@@ -92,11 +97,13 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         updatedDate.set(Calendar.YEAR, year);
         updatedDate.set(Calendar.MONTH, monthOfYear);
         updatedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        updateTitle(updatedDate);
+        if (!mIsTitleShown) {
+            updateTitle(updatedDate);
+        }
     }
 
     private void updateTitle(Calendar updatedDate) {
-        if(mIsTitleShown) {
+        if (mIsTitleShown) {
             final DateFormat dateFormat = mTitleDateFormat;
             setTitle(dateFormat.format(updatedDate.getTime()));
         } else {

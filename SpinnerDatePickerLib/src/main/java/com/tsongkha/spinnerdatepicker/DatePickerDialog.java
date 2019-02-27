@@ -97,7 +97,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         updatedDate.set(Calendar.YEAR, year);
         updatedDate.set(Calendar.MONTH, monthOfYear);
         updatedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        if (!mIsTitleShown) {
+        if (!mIsTitleHold) {
             updateTitle(updatedDate);
         }
     }

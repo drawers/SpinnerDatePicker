@@ -31,6 +31,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
     private boolean mIsDayShown = true;
     private boolean mIsTitleShown = true;
     private boolean mIsTitleHold = false;
+    private String mTitleText;
 
     /**
      * The callback used to indicate the user is done filling in the date.
@@ -55,7 +56,8 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
                      Calendar maxDate,
                      boolean isDayShown,
                      boolean isTitleShown,
-                     boolean isTitleHold) {
+                     boolean isTitleHold,
+                     String titleText) {
         super(context, theme);
 
         mCallBack = callBack;
@@ -63,6 +65,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         mIsDayShown = isDayShown;
         mIsTitleShown = isTitleShown;
         mIsTitleHold = isTitleHold;
+        mTitleText = titleText;
 
         updateTitle(defaultDate);
 
@@ -78,8 +81,11 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         mDatePicker = new DatePicker((ViewGroup) view, spinnerTheme);
         mDatePicker.setMinDate(minDate.getTimeInMillis());
         mDatePicker.setMaxDate(maxDate.getTimeInMillis());
-        mDatePicker.init(defaultDate.get(Calendar.YEAR), defaultDate.get(Calendar.MONTH), defaultDate.get(Calendar.DAY_OF_MONTH), isDayShown, this);
-
+        mDatePicker.init(defaultDate.get(Calendar.YEAR),
+                defaultDate.get(Calendar.MONTH),
+                defaultDate.get(Calendar.DAY_OF_MONTH),
+                isDayShown,
+                this);
     }
 
     @Override
@@ -97,15 +103,18 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         updatedDate.set(Calendar.YEAR, year);
         updatedDate.set(Calendar.MONTH, monthOfYear);
         updatedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        if (!mIsTitleHold) {
             updateTitle(updatedDate);
-        }
+
     }
 
     private void updateTitle(Calendar updatedDate) {
         if (mIsTitleShown) {
             final DateFormat dateFormat = mTitleDateFormat;
-            setTitle(dateFormat.format(updatedDate.getTime()));
+            if (mIsTitleHold && mTitleText!=null) {
+                setTitle(mTitleText);
+            } else {
+                setTitle(dateFormat.format(updatedDate.getTime()));
+            }
         } else {
             setTitle(" ");
         }

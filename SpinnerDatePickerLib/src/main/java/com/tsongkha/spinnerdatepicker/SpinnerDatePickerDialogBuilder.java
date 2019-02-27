@@ -12,6 +12,7 @@ public class SpinnerDatePickerDialogBuilder {
     private boolean isDayShown = true;
     private boolean isTitleShown = true;
     private boolean isTitleHold = false;
+    private String titleText;
     private int theme = 0;                 //default theme
     private int spinnerTheme = 0;          //default theme
     private Calendar defaultDate = new GregorianCalendar(1980, 0, 1);
@@ -69,6 +70,11 @@ public class SpinnerDatePickerDialogBuilder {
         return this;
     }
 
+    public SpinnerDatePickerDialogBuilder setTitleText(String titleText) {
+        this.titleText = titleText;
+        return this;
+    }
+
     public DatePickerDialog build() {
         if (context == null) throw new IllegalArgumentException("Context must not be null");
         if (maxDate.getTime().getTime() <= minDate.getTime().getTime())
@@ -83,6 +89,7 @@ public class SpinnerDatePickerDialogBuilder {
                 maxDate,
                 isDayShown,
                 isTitleShown,
-                isTitleHold);
+                isTitleHold,
+                titleText);
     }
 }

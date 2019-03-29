@@ -21,7 +21,7 @@ import java.util.Locale;
  * Created by rawsond on 25/08/17.
  */
 
-public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener , DatePickerDialog.OnDateCancelListener{
 
     TextView dateTextView;
     Button dateButton;
@@ -48,15 +48,23 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         dateTextView.setText(simpleDateFormat.format(calendar.getTime()));
     }
 
+    @Override
+    public void onCancelled(DatePicker view) {
+        dateTextView.setText(R.string.cancelled);
+    }
+
 
     @VisibleForTesting
     void showDate(int year, int monthOfYear, int dayOfMonth, int spinnerTheme) {
         new SpinnerDatePickerDialogBuilder()
                 .context(MainActivity.this)
                 .callback(MainActivity.this)
+                .onCancel(MainActivity.this)
                 .spinnerTheme(spinnerTheme)
                 .defaultDate(year, monthOfYear, dayOfMonth)
                 .build()
                 .show();
     }
+
+
 }

@@ -25,6 +25,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
 
     private final DatePicker mDatePicker;
     private final OnDateSetListener mCallBack;
+    private final OnDateCancelListener mOnCancel;
     private final DateFormat mTitleDateFormat;
 
     private boolean mIsDayShown = true;
@@ -44,10 +45,23 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth);
     }
 
+    /**
+     * Callback for when things are cancelled
+     */
+    public interface OnDateCancelListener {
+        /**
+         * Called when cancel happens.
+         *
+         * @param view The view associated with this listener.
+         */
+        void onCancelled(DatePicker view);
+    }
+
     DatePickerDialog(Context context,
                      int theme,
                      int spinnerTheme,
                      OnDateSetListener callBack,
+                     OnDateCancelListener onCancel,
                      Calendar defaultDate,
                      Calendar minDate,
                      Calendar maxDate,
@@ -56,6 +70,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         super(context, theme);
 
         mCallBack = callBack;
+        mOnCancel = onCancel;
         mTitleDateFormat = DateFormat.getDateInstance(DateFormat.LONG);
         mIsDayShown = isDayShown;
         mIsTitleShown = isTitleShown;
@@ -65,7 +80,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         setButton(BUTTON_POSITIVE, context.getText(android.R.string.ok),
                 this);
         setButton(BUTTON_NEGATIVE, context.getText(android.R.string.cancel),
-                (OnClickListener) null);
+                this);
 
         LayoutInflater inflater =
                 (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -80,10 +95,22 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
-        if (mCallBack != null) {
-            mDatePicker.clearFocus();
-            mCallBack.onDateSet(mDatePicker, mDatePicker.getYear(),
-                    mDatePicker.getMonth(), mDatePicker.getDayOfMonth());
+        switch (which) {
+            case BUTTON_POSITIVE: {
+                if (mCallBack != null) {
+                    mDatePicker.clearFocus();
+                    mCallBack.onDateSet(mDatePicker, mDatePicker.getYear(),
+                            mDatePicker.getMonth(), mDatePicker.getDayOfMonth());
+                }
+                break;
+            }
+            case BUTTON_NEGATIVE: {
+                if (mOnCancel != null) {
+                    mDatePicker.clearFocus();
+                    mOnCancel.onCancelled(mDatePicker);
+                }
+                break;
+            }
         }
     }
 
@@ -97,7 +124,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
     }
 
     private void updateTitle(Calendar updatedDate) {
-        if(mIsTitleShown) {
+        if (mIsTitleShown) {
             final DateFormat dateFormat = mTitleDateFormat;
             setTitle(dateFormat.format(updatedDate.getTime()));
         } else {

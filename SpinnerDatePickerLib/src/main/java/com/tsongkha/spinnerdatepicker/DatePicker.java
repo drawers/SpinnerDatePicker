@@ -36,6 +36,8 @@ import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.TextView;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -141,6 +143,19 @@ public class DatePicker extends FrameLayout {
                                                       mPickerContainer, false);
         mDaySpinner.setId(R.id.day);
         mDaySpinner.setFormatter(new TwoDigitFormatter());
+        try {
+            Method method = mDaySpinner.getClass().getDeclaredMethod("changeValueByOne", boolean.class);
+            method.setAccessible(true);
+            method.invoke(mDaySpinner, true);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
         mDaySpinner.setOnLongPressUpdateInterval(100);
         mDaySpinner.setOnValueChangedListener(onChangeListener);
         mDaySpinnerInput = NumberPickers.findEditText(mDaySpinner);

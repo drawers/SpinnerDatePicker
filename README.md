@@ -38,6 +38,7 @@ And then:
                 .callback(MainActivity.this)
                 .spinnerTheme(R.style.NumberPickerStyle)
                 .showTitle(true)
+                .customTitle("My custom title")
                 .showDaySpinner(true)
                 .defaultDate(2017, 0, 1)
                 .maxDate(2020, 0, 1)

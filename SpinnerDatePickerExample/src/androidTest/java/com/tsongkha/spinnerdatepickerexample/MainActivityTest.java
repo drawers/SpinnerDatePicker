@@ -221,4 +221,25 @@ public class MainActivityTest {
         onView(withClassName(containsString("DialogTitle"))).check(
                 matches(withText(" ")));
     }
+
+    @Test
+    public void testIsCustomTitleShown() throws Exception {
+        //act
+        mainActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                new SpinnerDatePickerDialogBuilder()
+                        .context(mainActivity)
+                        .showTitle(true)
+                        .customTitle("My custom title")
+                        .spinnerTheme(R.style.DatePickerSpinner)
+                        .build()
+                        .show();
+            }
+        });
+
+        //assert
+        onView(withClassName(containsString("DialogTitle"))).check(
+                matches(withText("My custom title")));
+    }
 }

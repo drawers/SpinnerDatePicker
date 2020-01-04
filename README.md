@@ -1,7 +1,13 @@
 [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=18) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SpinnerDatePicker-red.svg?style=plastic)](https://android-arsenal.com/details/1/6319) [![Release](https://jitpack.io/v/drawers/SpinnerDatePicker.svg)](https://jitpack.io/#drawers/SpinnerDatePicker)
 
-Spinner DatePicker
+~~Spinner DatePicker~~
 -----
+
+# Deprecation
+ 
+This repo is no longer being maintained due to time constraints. #sorrynotsorry
+
+If you wish to transfer ownership then please contact the author via issues.
 
 ## Summary
 
